@@ -3,6 +3,7 @@
 /classes
 /checkouts
 /out
+/art_master
 pom.xml
 pom.xml.asc
 *.jar
