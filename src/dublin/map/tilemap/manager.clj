@@ -57,12 +57,13 @@
 (defn draw-map-layer
   "draw single map layer from set"
   [gr mapset-layer]
-  (let [mapset (:map mapset-layer)
+  (let [mapset (concat (:map mapset-layer)
+                       (map #(nth (:images %) (:frame %)) objects))
         position-x (:position-x mapset-layer)
         position-y (:position-y mapset-layer)]
     (doseq
-      [x (range (:start-draw-x mapset-layer) (+ config/TILES-ACROSS 1))
-       y (range (:start-draw-y mapset-layer) (+ config/TILES-DOWN 1))]
+      [x (range (:start-draw-x mapset-layer) (inc config/TILES-ACROSS))
+       y (range (:start-draw-y mapset-layer) (inc config/TILES-DOWN))]
        (utils/draw-tile gr (nth (nth mapset y) x)
           (+ position-x (* x config/TILE-DIM))
           (+ position-y (* y config/TILE-DIM))))))
