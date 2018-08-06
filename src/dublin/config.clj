@@ -3,7 +3,38 @@
 (def VERSION "0.1.0")
 
 (def WINDOW-TITLE "Dublin")
-(def WINDOW-WIDTH 320)
-(def WINDOW-HEIGHT 180)
-(def SCALE-FACTOR 4)
+
+(def WINDOW-WIDTH 256)
+(def WINDOW-HEIGHT 160)
+(def SCALE-FACTOR 4.5)
+
 (def FRAMERATE 60)
+
+(def TILE-DIM 32)
+
+(def TILES-ACROSS (/ WINDOW-WIDTH TILE-DIM))
+(def TILES-DOWN (/ WINDOW-HEIGHT TILE-DIM))
+
+; Environment map structural definitions
+(defrecord Environment [current mapsets])
+(defrecord MapSet [map-layers map-tileset map-objects])
+(defrecord Layer [map offset position-x position-y start-draw-x start-draw-y width height])
+(defrecord TileSet [images dim])
+(defrecord MapObject [images dim action controller frame operating?])
+
+(defrecord EntitySet [path actions]) ;TODO
+
+(def player (EntitySet. "entities/player" '()))
+
+(def tap (MapObject. "objects/tap.png" TILE-DIM :tap :p 0 false))
+
+(def underdog
+      (MapSet.  ;TODO: map links
+        (list
+          (Layer. "maps/.." 10 0 0 0 0 0 0)
+          (Layer. "maps/.." 0 0 0 0 0 0 0)
+          (Layer. "maps/.." -10 0 0 0 0 0 0))
+        (TileSet. "tiles/..." TILE-DIM)
+        (list tap)))
+
+(def dublin (Environment. 0 (list underdog)))

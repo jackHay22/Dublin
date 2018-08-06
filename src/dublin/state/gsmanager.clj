@@ -9,11 +9,7 @@
 (defn new-state-pipeline [] (atom nil))
 
 (def LOAD-STATE 0)
-(def MENU-STATE 1)
-(def LEVEL-STATE 2)
-(def CLIENT-STATE 3)
-(def SERVER-STATE 4)
-(def GP-STATE 5)
+
 
 (def current-game-state (atom LOAD-STATE))
 

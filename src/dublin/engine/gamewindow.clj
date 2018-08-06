@@ -13,26 +13,25 @@
 (import java.awt.Dimension)
 
 (def control-keys
-      {java.awt.event.KeyEvent/VK_UP :up
-       java.awt.event.KeyEvent/VK_DOWN :down
-       java.awt.event.KeyEvent/VK_LEFT :left
+      {java.awt.event.KeyEvent/VK_UP    :up
+       java.awt.event.KeyEvent/VK_DOWN  :down
+       java.awt.event.KeyEvent/VK_LEFT  :left
        java.awt.event.KeyEvent/VK_RIGHT :right
        java.awt.event.KeyEvent/VK_SPACE :space
        java.awt.event.KeyEvent/VK_ENTER :enter
        java.awt.event.KeyEvent/VK_SHIFT :shift
-       java.awt.event.KeyEvent/VK_P :p
-       java.awt.event.KeyEvent/VK_S :s
-       java.awt.event.KeyEvent/VK_L :l
-       java.awt.event.KeyEvent/VK_R :r})
+       java.awt.event.KeyEvent/VK_W     :up
+       java.awt.event.KeyEvent/VK_S     :down
+       java.awt.event.KeyEvent/VK_A     :left
+       java.awt.event.KeyEvent/VK_D     :right
+       java.awt.event.KeyEvent/VK_O     :open
+       java.awt.event.KeyEvent/VK_I     :interact})
 
 (def system-thread (atom nil))
 (def sleep-ticks-per-second 1000)
 
 (defn graphical-panel
-  "-extends JPanel, implements Runnable and KeyListener-
-   Run performs active render loop using double buffering
-   and dynamically calculates thread sleep for consistent
-   framerate"
+  "-extends JPanel, implements Runnable and KeyListener-"
   [w h s td]
   (let [base-image (BufferedImage. w h BufferedImage/TYPE_INT_ARGB)
         g (cast Graphics2D (.createGraphics base-image))

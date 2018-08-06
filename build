@@ -27,12 +27,12 @@ build_native () {
       -title "Dublin" \
       -Bruntime=${JAVA_RUNTIME} \
       -Bicon=resources/app/dublin.icns && \
-  printf "${CLOVER}  ${GREEN}Dublin.app${NC} built to ${CYAN}/out/bundles/Dublin${NC}. \n"
+  printf "${BEER}  ${GREEN}Dublin.app${NC} built to ${CYAN}/out/bundles/Dublin${NC}. \n"
 }
 
 #check lein installation
 if command -v lein >/dev/null 2>&1; then
-  printf "${CLOVER}  Building ${GREEN}Dublin${NC} jar binary... ${YELLOW}${1}${NC} \n"
+  printf "${CLOVER}  Building ${GREEN}Dublin${NC} jar binary... \n"
   lein_build
 else
   printf "${CLOVER}  Warning: ${YELLOW}lein${NC} not installed, attempting to download with homebrew... \n"
@@ -51,16 +51,16 @@ fi
 
 if [ $# -eq 0 ]; then
   build_native
-elif [ "$1" == "-release" ]; then
+elif [ "$1" == "--release" ]; then
   build_native
   BUILD_NAME="Dublin-$(echo target/uberjar/dublin*.jar | awk -F"-" '{ print $2 }').zip"
   VERSION="$(echo target/uberjar/dublin*.jar | awk -F"-" '{ print $2 }')"
   pushd out/bundles
   zip -r $BUILD_NAME ./Dublin.app > /dev/null 2>&1
   popd
-  printf "${CLOVER}  Build ${YELLOW}$VERSION${NC} release complete \n"
+  printf "${BEER}  Build ${YELLOW}$VERSION${NC} release complete \n"
 else
-  printf "${CLOVER}  Error: ${YELLOW}"$1"${NC} not a valid build mode. "
-  printf "Use ${YELLOW}-release${NC}, ${YELLOW}-editor${NC}, ${YELLOW}-backup${NC} or ${YELLOW}-server${NC}. \n"
+  printf "${CLOVER}  Error: ${YELLOW}"$1"${NC} not a valid build mode"
+  printf "Use ${YELLOW}-release${NC}, ${YELLOW}-editor${NC}, ${YELLOW}-backup${NC} or ${YELLOW}-server${NC} \n"
   exit 1
 fi

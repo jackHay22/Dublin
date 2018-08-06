@@ -11,5 +11,4 @@
     ;(gsm/init-gsm gsm/LEVEL-STATE)
     (engine/start-window config/WINDOW-TITLE config/WINDOW-WIDTH
             config/WINDOW-HEIGHT config/SCALE-FACTOR config/FRAMERATE)
-    ;(gsm/start-pipeline-autosave gsm/LEVEL-STATE)
     ))
