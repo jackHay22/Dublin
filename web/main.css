@@ -16,23 +16,37 @@ body {
 h1 {
   font-size: 48px;
   font-weight: 100;
-  color: #EFEFEF;
+  color: #105B63;
 }
 h3 {
   font-size: 24px;
-  font-weight: 100;
 }
 p {
-  font-weight: 100;
   font-size: 16px;
-  line-height: 1.4;
 }
 
+.buttonOutline {
+  display: block;
+  text-decoration: none;
+  color: #105B63;
+  border: 2px solid #105B63;
+  border-radius: 6px;
+  width: 175px;
+  height: 53px;
+  line-height: 53px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.buttonOutline:hover {
+    background-color: #105B63;
+    color: white;
+}
 .buttonFilled {
   display: block;
   text-decoration: none;
-  color: #3F5765;
-  background-color: #BDD4DE;
+  color: white;
+  background-color: #105B63;
   border-radius: 6px;
   width: 175px;
   height: 53px;
@@ -41,16 +55,7 @@ p {
   margin-top: 30px;
 }
 .buttonFilled:hover {
-    background-color: #B4CAD4;
-}
-
-code {
-    font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
-    background-color: #3F5765;
-    border-radius: 3px;
-    font-size: 80%;
-    padding: 0.3em 0.5em;
-    margin: 0;
+    background-color: #0D4B52;
 }
 
 /*-NAV-*/
@@ -60,7 +65,7 @@ nav {
 }
 nav a {
   text-decoration: none;
-  color: #EFEFEF;
+  color: #202427;
   font-size: 20px;
   font-weight: 700;
 }
@@ -72,104 +77,100 @@ nav a img {
   image-rendering: -webkit-optimize-contrast;
 }
 nav a span {
-  background-color: #EFEFEF;
+  background-color: #105B63;
   padding: 5px 15px;
-  border-radius: 900px;
+  border-radius: 1000px;
   font-weight: 100;
   color: white;
   margin-left: 7px;
 }
 
+/* ABOUT paragraph */
+.descriptionSection {
+  padding: 0 5%;
+  background-image: url(images/background_about.svg);
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 80%;
+  height: 900px;
+  min-height: 900px;
+}
+.descriptionSection h1 {
+  margin-bottom: 30px;
+  padding-top: 30px;
+  margin-left: 50%;
+}
+.descriptionSection p {
+  margin-left: 50%;
+}
+
+code {
+    font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+    background-color: #EBEBEB;
+    border-radius: 3px;
+    font-size: 80%;
+    padding: 0.3em 0.5em;
+    margin: 0;
+}
+
 /*-HEADER-*/
 header {
-  height: 80px;
-  min-height: 80px;
+  height: 1000px;
+  min-height: 1000px;
   padding: 0 5%;
+  background-image: url(images/background_header.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom right;
 }
 header h1 {
   width: 40%;
   margin: 2em 0 0 0;
 }
 
-/*-DOWNLOAD-*/
-.mainPage {
+/*-DOCS-*/
+.docs {
+  height: 1400px;
+  min-height: 1400px;
   padding: 0 5%;
-  background-image: url(images/background_header.svg);
-  background-repeat: no-repeat;
-  background-position: top left;
-  background-size: 80%;
-  height: 600px;
-  min-height: 600px;
-}
-.mainPage h1 {
-  margin-bottom: 30px;
-  padding-top: 150px;
-}
-.icons {
-  margin-right: 30px;
-}
-.mainPage h1, .icons {
-  margin-left: 65%;
 }
 
-.mainPage a {
-  margin-left: 65%;
-}
-
-/*-TEAM-*/
-.team {
-  text-align: center;
-  margin: 4em 0 3em 0;
-  padding: 0 5%;
-  image-rendering: -webkit-optimize-contrast;
-}
-.team h1 {
-  width: 50%;
-  margin: 0 auto 30px auto;
-}
-.members {
-  display: flex;
-  justify-content: center;
-}
-.person {
-  margin: 0 30px;
-  color: #EFEFEF;
-}
-.person h3 {
-  margin: 5px;
-}
-
-/*-ABOUT-*/
-.aboutPage {
-  padding: 0 5%;
-  background-image: url(images/about_header.svg);
-  background-repeat: no-repeat;
-  background-position: top left;
-  background-size: 80%;
-  height: 600px;
-  min-height: 600px;
-}
-.aboutPage h1 {
-  margin-bottom: 30px;
-  padding-top: 150px;
-}
-
-.aboutPage h1, .icons {
-  margin-left: 50%;
-}
-
-.aboutPage p {
-  margin-left: 50%;
-  color: #EFEFEF;
+.docs h3 {
+  text-align: left;
+  padding: 2% 2%;
   font-weight: 100;
-  font-size: 20px;
+  color: #105B63;
+}
+.docs p {
+  padding: 0% 2%;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.list {
+  padding: 0% 2%;
+  line-height: 1.4;
+  font-size: 16px;
+}
+
+/*-Getting Started-*/
+.started {
+  text-align: left;
+  padding: 10em 5% 20em 5%;
+  background-image: url(images/background_started.svg);
+  background-repeat: no-repeat;
+  background-size: 60%;
+  background-position: top left;
+}
+.started h1, .started a {
+  margin-left: 65%;
 }
 
 /*-Footer-*/
 footer {
   padding: 0 5%;
   margin-bottom: 40px;
-  color: #EFEFEF;
+  color: #105B63;
 }
 footer p, .footerPages {
   display: incline-block;
@@ -180,6 +181,13 @@ footer p, .footerPages {
 .footerPages a {
   text-decoration: none;
   font-weight: 100;
-  color: #EFEFEF;
+  color: #105B63;
   margin-left: 30px;
+}
+
+@media only screen and (max-width: 1200px) {
+  body {
+    /* background-color: lightblue; */
+  }
+
 }
