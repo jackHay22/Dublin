@@ -18,27 +18,23 @@
     returns: map of fields and :draw.  result is wrapped with :map, :tiles-across, :tiles-down"
     [path]
     (with-open [reader (clojure.java.io/reader (io/resource path))]
-    (let [loaded-map
-          (pmap (fn [line]
-            (pmap (fn [sub-line]
-                    (map #(Integer. %)
-                              (clojure.string/split sub-line #",")))
-          (clojure.string/split line #" ")))
-        (clojure.string/split (clojure.string/join "\n" (line-seq reader)) #"\n"))]
-        {:map loaded-map
-         :tiles-across (count (first loaded-map))
-         :tiles-down (count loaded-map)})))
+        (map (fn [line]
+                    (map #(Integer. %) (clojure.string/split line #",")))
+        (clojure.string/split (clojure.string/join "\n" (line-seq reader)) #"\n"))))
 
 (defn load-master-image-set
-  "split master image into list of images"
-  [path block-dim]
-  (let [loaded-master (env-utils/load-image path)]
-        (doall
-          (pmap (fn [y]
-              (pmap (fn [x]
-                (.getSubimage loaded-master x y block-dim block-dim))
-              (range 0 (.getWidth loaded-master) block-dim)))
-          (range 0 (.getHeight loaded-master) block-dim)))))
+    "split master image into list of images"
+    [path block-dim]
+    (let [master-image (env-utils/load-image path)
+          master-width (.getWidth master-image)
+          master-height (.getHeight master-image)]
+          (flatten (doall
+            (map (fn [y]
+              (doall
+                (map (fn [x]
+                  (.getSubimage master-image x y block-dim block-dim))
+                (range 0 master-width block-dim))))
+            (range 0 master-height block-dim))))))
 
 (defn set-map-layer-position
   "set map position (one layer)"
@@ -63,7 +59,9 @@
           :start-draw-y
           (int (/ (- position-y) config/TILE-DIM)))))
 
-(defn draw-tile [gr img x y] (env-utils/draw-image gr img x y))
+(defn draw-tile [gr img x y]
+  (env-utils/draw-image gr img x y))
+  
 ; (def layer-1-lighting-opacity 200)
 ; (def layer-2-lighting-opacity 100)
 ;

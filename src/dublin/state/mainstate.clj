@@ -7,8 +7,8 @@
 (defn main-init
   "takes environment definition, loads,
   returns long-running state"
-  [environment]
-  (environmentmanager/environment-init environment))
+  []
+  (environmentmanager/environment-init config/dublin))
 
 (defn main-update
   [state]
@@ -20,10 +20,10 @@
 
 (defn main-keypressed
   [key]
-
+  ;TODO
 )
 
 (defn main-keyreleased
   [key]
-
+  ;TODO
 )

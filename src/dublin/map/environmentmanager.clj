@@ -11,7 +11,7 @@
   [map-preset]
   (update-in map-preset [:mapsets]
       (fn [mapsets]
-        (doall (map
+        (into [] (doall (map
           #(update-in
             (update-in
               (update-in % [:map-layers]
@@ -20,24 +20,29 @@
                                 (fn [map-tileset] (tilemap-manager/load-tileset map-tileset)))
                             [:map-objects]
                                 (fn [map-objects] (tilemap-manager/load-map-objects map-objects)))
-        mapsets)))))
+        mapsets))))))
 
 (defn environment-update
   "take state and perform updates"
   [state]
   ;TODO: entity code and objects
   (update-in state [:mapsets (:current state)]
-    #(tilemap-manager/update-map-resource-set % 64 64)
+    #(tilemap-manager/update-map-resource-set % 128 400)
   ))
 
 (defn environment-draw
   "draw environment state"
   [gr state]
-  (let [mapset-to-draw (nth (:mapsets state) (:current state))]
+  (let [mapset-to-draw (nth (:mapsets state) (:current state))
+        tileset (:images (:map-tileset mapset-to-draw))
+        object-images '() ;(map #(nth (:images %) (:frame %)) (:map-objects mapset-to-draw))
+        ]
     ;TODO: temporary; integrate entities
-    (doall (map #(tilemap-manager/draw-map-layer gr %) mapset-to-draw))
+    (doall (map
+              #(tilemap-manager/draw-map-layer gr % tileset object-images)
+            (:map-layers mapset-to-draw))
   )
-  )
+  ))
 
 (defn environment-keypressed
   [key state]

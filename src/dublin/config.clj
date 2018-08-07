@@ -31,10 +31,11 @@
 (def underdog
       (MapSet.  ;TODO: map links
         (list
-          (Layer. "maps/.." 10 0 0 0 0 0 0)
-          (Layer. "maps/.." 0 0 0 0 0 0 0)
-          (Layer. "maps/.." -10 0 0 0 0 0 0))
-        (TileSet. "tiles/..." TILE-DIM)
+          (Layer. "maps/underdog_int_layer_0.txt" 20 0 0 0 0 0 0)
+          (Layer. "maps/underdog_int_layer_1.txt" 10 0 0 0 0 0 0)
+          (Layer. "maps/underdog_int_layer_2.txt" 0 0 0 0 0 0 0)
+          (Layer. "maps/underdog_int_layer_3.txt" -10 0 0 0 0 0 0))
+        (TileSet. "tiles/underdog_int.png" TILE-DIM)
         (list tap)))
 
-(def dublin (Environment. 0 (list underdog)))
+(def dublin (Environment. 0 (vector underdog)))

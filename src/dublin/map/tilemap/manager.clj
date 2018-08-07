@@ -8,18 +8,13 @@
   "take list of map layers, return loaded layers and offsets
   :map, :offset"
   [map-layers]
-  (doall
-    (map (fn [layer]
-          (update-in
-            (update-in
-              (update-in layer [:map]
-                                  (fn [map-path] (utils/load-map-file map-path)))
-                               [:width]
-                                  (fn [map-loaded]
-                                        (* config/TILE-DIM (count (first (:map map-loaded))))))
-                               [:height]
-                                  (fn [width-set]
-                                        (* config/TILE-DIM (count (:map width-set))))))
+  (doall (map (fn [layer]
+          (let [map-loaded (doall (update-in layer [:map]
+                                    (fn [map-path] (utils/load-map-file map-path))))]
+                (assoc map-loaded :width
+                          (* config/TILE-DIM (count (first (:map map-loaded))))
+                                   :height
+                          (* config/TILE-DIM (count (:map map-loaded))))))
             map-layers)))
 
 (defn load-tileset
@@ -56,17 +51,22 @@
 
 (defn draw-map-layer
   "draw single map layer from set"
-  [gr mapset-layer]
-  (let [mapset (concat (:map mapset-layer)
-                       (map #(nth (:images %) (:frame %)) objects))
+  [gr mapset-layer tileset object-images]
+  (let [images (concat tileset object-images)
+        map-array (:map mapset-layer)
         position-x (:position-x mapset-layer)
-        position-y (:position-y mapset-layer)]
+        position-y (:position-y mapset-layer)
+        map-tiles-across (:width mapset-layer)
+        map-tiles-down (:height mapset-layer)]
     (doseq
       [x (range (:start-draw-x mapset-layer) (inc config/TILES-ACROSS))
        y (range (:start-draw-y mapset-layer) (inc config/TILES-DOWN))]
-       (utils/draw-tile gr (nth (nth mapset y) x)
-          (+ position-x (* x config/TILE-DIM))
-          (+ position-y (* y config/TILE-DIM))))))
+       (if (and (>= x 0) (>= y 0) (> map-tiles-across x) (> map-tiles-down y))
+            (let [image-index (nth (nth map-array y) x)]
+                  (if (not (= image-index -1))
+                      (utils/draw-tile gr (nth images image-index)
+                          (+ position-x (* x config/TILE-DIM))
+                          (+ position-y (* y config/TILE-DIM)))))))))
 
 (defn invoke-object-at
   "invoke a map object"
