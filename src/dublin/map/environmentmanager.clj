@@ -27,7 +27,7 @@
   [state]
   ;TODO: entity code and objects
   (update-in state [:mapsets (:current state)]
-    #(tilemap-manager/update-map-resource-set % 128 400)
+    #(tilemap-manager/update-map-resource-set % 128 220)
   ))
 
 (defn environment-draw

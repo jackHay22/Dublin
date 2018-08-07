@@ -61,7 +61,7 @@
 
 (defn draw-tile [gr img x y]
   (env-utils/draw-image gr img x y))
-  
+
 ; (def layer-1-lighting-opacity 200)
 ; (def layer-2-lighting-opacity 100)
 ;

@@ -56,11 +56,13 @@
         map-array (:map mapset-layer)
         position-x (:position-x mapset-layer)
         position-y (:position-y mapset-layer)
-        map-tiles-across (:width mapset-layer)
-        map-tiles-down (:height mapset-layer)]
+        start-draw-x (:start-draw-x mapset-layer)
+        start-draw-y (:start-draw-y mapset-layer)
+        map-tiles-across (/ (:width mapset-layer) config/TILE-DIM)
+        map-tiles-down (/ (:height mapset-layer) config/TILE-DIM)]
     (doseq
-      [x (range (:start-draw-x mapset-layer) (inc config/TILES-ACROSS))
-       y (range (:start-draw-y mapset-layer) (inc config/TILES-DOWN))]
+      [x (range start-draw-x (+ start-draw-x (inc config/TILES-ACROSS)))
+       y (range start-draw-y (+ start-draw-y (inc config/TILES-DOWN)))]
        (if (and (>= x 0) (>= y 0) (> map-tiles-across x) (> map-tiles-down y))
             (let [image-index (nth (nth map-array y) x)]
                   (if (not (= image-index -1))
