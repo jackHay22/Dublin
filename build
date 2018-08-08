@@ -30,6 +30,17 @@ build_native () {
   printf "${BEER}  ${GREEN}Dublin.app${NC} built to ${CYAN}/out/bundles/Dublin${NC}. \n"
 }
 
+start_docker() {
+  open -a Docker || exit 1
+  i=0
+  while ! docker system info &>/dev/null; do
+    (( i++ == 0 )) && printf "${CLOVER}  Waiting for ${CYAN}Docker${NC} daemon" %s || printf "."
+    sleep 1
+  done
+  (( i )) && printf '\n'
+  printf "${CLOVER}  Started ${CYAN}Docker${NC} daemon successfully. \n"
+}
+
 #check lein installation
 if command -v lein >/dev/null 2>&1; then
   printf "${CLOVER}  Building ${GREEN}Dublin${NC} jar binary... \n"
@@ -42,11 +53,11 @@ else
   else
     printf "${CLOVER}  Warning: ${YELLOW}brew${NC} not installed, trying to download now... \n"
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    printf "${CLOVER}  ${YELLOW}Brew${NC}: installing ${GREEN}lein${NC}... \n"
+    printf "${CLOVER}  Using brew to install ${YELLOW}lein${NC}... \n"
     brew install leiningen || exit 1 #note: this is not the preferred way to install lein
-    printf "${CLOVER}  Building ${GREEN}Dublin${NC} jar binary... ${YELLOW}${1}${NC} \n"
-    lein_build
   fi
+  printf "${CLOVER}  Building ${GREEN}Dublin${NC} jar binary... ${YELLOW}${1}${NC} \n"
+  lein_build
 fi
 
 if [ $# -eq 0 ]; then
@@ -58,6 +69,11 @@ elif [ "$1" == "--release" ]; then
   pushd out/bundles
   zip -r $BUILD_NAME ./Dublin.app > /dev/null 2>&1
   popd
+  printf "${CLOVER}  Copying release to ${YELLOW}web/web_content/${NC}... \n"
+  cp out/bundles/Dublin-*.zip web/Dublin.zip
+  printf "${CLOVER}  Building web image... \n"
+  docker info >/dev/null 2>&1 || start_docker
+  docker build -t downloadserver web
   printf "${BEER}  Build ${YELLOW}$VERSION${NC} release complete \n"
 else
   printf "${CLOVER}  Error: ${YELLOW}"$1"${NC} not a valid build mode"
