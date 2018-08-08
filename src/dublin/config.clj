@@ -22,9 +22,9 @@
 (defrecord TileSet [images dim])
 (defrecord MapObject [images dim action controller frame operating?])
 
-(defrecord EntitySet [path actions]) ;TODO
+(defrecord EntitySet [walk-left walk-right idle-left idle-right idle-front idle-back special x y]) ;TODO
 
-(def player (EntitySet. "entities/player" '()))
+;(def player (EntitySet. "entities/player" '()))
 
 (def tap (MapObject. "objects/tap.png" TILE-DIM :tap :p 0 false))
 

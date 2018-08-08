@@ -16,7 +16,7 @@ body {
 h1 {
   font-size: 48px;
   font-weight: 100;
-  color: #105B63;
+  color: #495E67;
 }
 h3 {
   font-size: 24px;
@@ -28,8 +28,8 @@ p {
 .buttonOutline {
   display: block;
   text-decoration: none;
-  color: #105B63;
-  border: 2px solid #105B63;
+  color: #495E67;
+  border: 2px solid #495E67;
   border-radius: 6px;
   width: 175px;
   height: 53px;
@@ -39,14 +39,14 @@ p {
 }
 
 .buttonOutline:hover {
-    background-color: #105B63;
+    background-color: #495E67;
     color: white;
 }
 .buttonFilled {
   display: block;
   text-decoration: none;
   color: white;
-  background-color: #105B63;
+  background-color: #FF3838;
   border-radius: 6px;
   width: 175px;
   height: 53px;
@@ -55,7 +55,7 @@ p {
   margin-top: 30px;
 }
 .buttonFilled:hover {
-    background-color: #0D4B52;
+    background-color: #E83333;
 }
 
 /*-NAV-*/
@@ -65,7 +65,7 @@ nav {
 }
 nav a {
   text-decoration: none;
-  color: #202427;
+  color: #495E67;
   font-size: 20px;
   font-weight: 700;
 }
@@ -77,31 +77,12 @@ nav a img {
   image-rendering: -webkit-optimize-contrast;
 }
 nav a span {
-  background-color: #105B63;
+  background-color: #495E67;
   padding: 5px 15px;
   border-radius: 1000px;
   font-weight: 100;
   color: white;
   margin-left: 7px;
-}
-
-/* ABOUT paragraph */
-.descriptionSection {
-  padding: 0 5%;
-  background-image: url(images/background_about.svg);
-  background-repeat: no-repeat;
-  background-position: left center;
-  background-size: 80%;
-  height: 900px;
-  min-height: 900px;
-}
-.descriptionSection h1 {
-  margin-bottom: 30px;
-  padding-top: 30px;
-  margin-left: 50%;
-}
-.descriptionSection p {
-  margin-left: 50%;
 }
 
 code {
@@ -139,7 +120,7 @@ header h1 {
   text-align: left;
   padding: 2% 2%;
   font-weight: 100;
-  color: #105B63;
+  color: #495E67;
 }
 .docs p {
   padding: 0% 2%;
@@ -170,7 +151,7 @@ header h1 {
 footer {
   padding: 0 5%;
   margin-bottom: 40px;
-  color: #105B63;
+  color: #495E67;
 }
 footer p, .footerPages {
   display: incline-block;
@@ -181,7 +162,7 @@ footer p, .footerPages {
 .footerPages a {
   text-decoration: none;
   font-weight: 100;
-  color: #105B63;
+  color: #495E67;
   margin-left: 30px;
 }
 

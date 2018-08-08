@@ -52,7 +52,7 @@
 (defn draw-map-layer
   "draw single map layer from set"
   [gr mapset-layer tileset object-images]
-  (let [images (concat tileset object-images)
+  (let [images (concat (:images tileset) object-images)
         map-array (:map mapset-layer)
         position-x (:position-x mapset-layer)
         position-y (:position-y mapset-layer)
@@ -63,6 +63,7 @@
     (doseq
       [x (range start-draw-x (+ start-draw-x (inc config/TILES-ACROSS)))
        y (range start-draw-y (+ start-draw-y (inc config/TILES-DOWN)))]
+
        (if (and (>= x 0) (>= y 0) (> map-tiles-across x) (> map-tiles-down y))
             (let [image-index (nth (nth map-array y) x)]
                   (if (not (= image-index -1))

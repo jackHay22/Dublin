@@ -16,9 +16,9 @@
             (update-in
               (update-in % [:map-layers]
                                 (fn [map-layers] (tilemap-manager/load-maps map-layers)))
-                            [:map-tileset]
+                           [:map-tileset]
                                 (fn [map-tileset] (tilemap-manager/load-tileset map-tileset)))
-                            [:map-objects]
+                           [:map-objects]
                                 (fn [map-objects] (tilemap-manager/load-map-objects map-objects)))
         mapsets))))))
 
@@ -34,7 +34,7 @@
   "draw environment state"
   [gr state]
   (let [mapset-to-draw (nth (:mapsets state) (:current state))
-        tileset (:images (:map-tileset mapset-to-draw))
+        tileset (:map-tileset mapset-to-draw)
         object-images '() ;(map #(nth (:images %) (:frame %)) (:map-objects mapset-to-draw))
         ]
     ;TODO: temporary; integrate entities
