@@ -33,7 +33,7 @@
 (def underdog
       (MapSet.  ;TODO: map links
         (list
-          (Layer. "maps/underdog_int_layer_0.txt" 0.95 0 0 0 0 0 0)
+          (Layer. "maps/underdog_int_layer_0.txt" 0.90 0 0 0 0 0 0)
           (Layer. "maps/underdog_int_layer_1.txt" 0.95 0 0 0 0 0 0)
           (Layer. "maps/underdog_int_layer_2.txt" 1 0 0 0 0 0 0)
           (Layer. "maps/underdog_int_layer_3.txt" 1.1 0 0 0 0 0 0))
