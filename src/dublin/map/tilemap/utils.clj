@@ -45,12 +45,13 @@
                           :in-range %1)
         depth-offset (:offset map-layer)
         position-x (bounds-correct
-                    (- (/ config/WINDOW-WIDTH 2) player-x)
+                    (int
+                      (* depth-offset
+                        (- (/ config/WINDOW-WIDTH 2) player-x)))
                     (- config/WINDOW-WIDTH (:width map-layer)))
         position-y (bounds-correct
                     (- (/ config/WINDOW-HEIGHT 2) player-y)
                     (- config/WINDOW-HEIGHT (:height map-layer)))]
-        ;TODO: factor in depth-offset
         (assoc map-layer
           :position-x position-x
           :position-y position-y

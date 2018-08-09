@@ -26,15 +26,17 @@
 
 ;(def player (EntitySet. "entities/player" '()))
 
+;RESOURCES
+
 (def tap (MapObject. "objects/tap.png" TILE-DIM :tap :p 0 false))
 
 (def underdog
       (MapSet.  ;TODO: map links
         (list
-          (Layer. "maps/underdog_int_layer_0.txt" 20 0 0 0 0 0 0)
-          (Layer. "maps/underdog_int_layer_1.txt" 10 0 0 0 0 0 0)
-          (Layer. "maps/underdog_int_layer_2.txt" 0 0 0 0 0 0 0)
-          (Layer. "maps/underdog_int_layer_3.txt" -10 0 0 0 0 0 0))
+          (Layer. "maps/underdog_int_layer_0.txt" 0.95 0 0 0 0 0 0)
+          (Layer. "maps/underdog_int_layer_1.txt" 0.95 0 0 0 0 0 0)
+          (Layer. "maps/underdog_int_layer_2.txt" 1 0 0 0 0 0 0)
+          (Layer. "maps/underdog_int_layer_3.txt" 1.1 0 0 0 0 0 0))
         (TileSet. "tiles/underdog_int.png" TILE-DIM)
         (list tap)))
 

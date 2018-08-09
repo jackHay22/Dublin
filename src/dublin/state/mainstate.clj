@@ -19,11 +19,12 @@
   (environmentmanager/environment-draw gr state))
 
 (defn main-keypressed
-  [key]
+  [key state]
   ;TODO
+  (environmentmanager/environment-keypressed key state)
 )
 
 (defn main-keyreleased
-  [key]
+  [key state]
   ;TODO
 )

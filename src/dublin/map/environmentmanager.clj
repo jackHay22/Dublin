@@ -5,6 +5,9 @@
             [dublin.map.tilemap.manager :as tilemap-manager])
   (:gen-class))
 
+(def temp-x (atom 128))
+(def temp-y (atom 220))
+
 (defn environment-init
   "take environment preset and perform loads
   map-preset is list of map sets"
@@ -27,7 +30,7 @@
   [state]
   ;TODO: entity code and objects
   (update-in state [:mapsets (:current state)]
-    #(tilemap-manager/update-map-resource-set % 128 220)
+    #(tilemap-manager/update-map-resource-set % @temp-x @temp-y)
   ))
 
 (defn environment-draw
@@ -46,8 +49,14 @@
 
 (defn environment-keypressed
   [key state]
+  (let [x @temp-x y @temp-y]
   ;if object key, pass location of player to map manager
-  )
+    (cond (= key :right)
+      (reset! temp-x (+ x 5))
+          (= key :left)
+      (reset! temp-x (- x 5))
+      )
+  ))
 
 (defn environment-keyreleased
   [key state])

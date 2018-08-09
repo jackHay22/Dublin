@@ -51,13 +51,11 @@
     (let [state-record (nth STATES @current-game-state)]
     ;TODO
     ;   (reset! (:pipeline-ref state-record)
-    ;       ((:key-press-handler state-record) key @(:pipeline-ref state-record))))
-          ))
+    ((:key-press-handler state-record) key @(:pipeline-ref state-record))))
 
 (defn keyreleased
     "respond to keyrelease event"
     [key]
     (let [state-record (nth STATES @current-game-state)]
     ;   (reset! (:pipeline-ref state-record)
-    ;       ((:key-release-handler state-record) key @(:pipeline-ref state-record))))
-          ))
+       ((:key-release-handler state-record) key @(:pipeline-ref state-record))))
