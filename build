@@ -70,7 +70,7 @@ elif [ "$1" == "--release" ]; then
   zip -r $BUILD_NAME ./Dublin.app > /dev/null 2>&1
   popd
   printf "${CLOVER}  Copying release to ${YELLOW}web/web_content/${NC}... \n"
-  cp out/bundles/Dublin-*.zip web/Dublin.zip
+  cp out/bundles/Dublin-*.zip web/web_content/Dublin.zip
   printf "${CLOVER}  Building web image... \n"
   docker info >/dev/null 2>&1 || start_docker
   docker build -t downloadserver web
