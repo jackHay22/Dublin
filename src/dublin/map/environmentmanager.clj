@@ -44,8 +44,7 @@
     (doall (map
               #(tilemap-manager/draw-map-layer gr % tileset object-images)
             (:map-layers mapset-to-draw))
-  )
-  ))
+  )))
 
 (defn environment-keypressed
   [key state]
