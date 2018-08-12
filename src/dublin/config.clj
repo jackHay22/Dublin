@@ -17,13 +17,14 @@
 
 (def LINK-PROXIMITY TILE-DIM)
 
-; Environment definition groups map locations and defines player
-(defrecord Environment [current mapsets player])
+; Environment definition groups map locations
+(defrecord Environment [current mapsets])
 
 ; Mapset defines a single location in the environment, its tilemap layers,
-; the associated image -> tileset, any image -> objects (interactive or animated), entities
+; the associated image -> tileset, any image -> objects (interactive or animated),
+; the player (only defined when map is current), entities
 ; within that map, and links to other maps in the environment
-(defrecord MapSet [map-layers map-tileset map-objects entities maplinks])
+(defrecord MapSet [map-layers map-tileset map-objects player entities maplinks])
 
 ; A maplink defines a "door" between mapsets in the environment and is defined
 ; by a proximity tile index and the index of the connected mapset
@@ -42,9 +43,9 @@
 ; the state of the object
 (defrecord MapObject [images dim action controller frame operating?])
 
-; An entity set defines a list of movement bindings, the index of the current movement, and the entity's
-; coordinates
-(defrecord EntitySet [movements current-movement-index x y])
+; An entity set defines a list of movement bindings, the index of the current movement, the current frame of the movement,
+; the number of times that frame has been displayed, and the entity's coordinates plus layer
+(defrecord EntitySet [movements current-movement-index current-frame-index current-frame-cycles x y layer-index])
 
 ; Movement bindings define an entity movement, the image -> images, the number of frames, the key that toggles
 ; the movement (or key release), the delay between frames, and the change in x and change in y for each update
@@ -54,7 +55,8 @@
 (def main-player
       (EntitySet.
         (list
-          (MovementBinding. "entities/jack_walk_r.png" 15 :right )) 0 128 220))
+          (MovementBinding. "entities/jack_walk_r.png" 15 :right 5 2 0)
+          (MovementBinding. "entities/jack_walk_l.png" 15 :left 5 -2 0)) 0 0 0 128 220 2))
 
 (def tap (MapObject. "objects/tap.png" TILE-DIM :tap :p 0 false))
 
@@ -67,7 +69,8 @@
           (Layer. "maps/underdog_int_layer_3.txt" 1.1 0 0 0 0 0 0))
         (TileSet. "tiles/underdog_int.png" TILE-DIM)
         (list tap)
+        main-player
         (list )
         (list )))
 
-(def dublin (Environment. 0 (vector underdog) main-player))
+(def dublin (Environment. 0 (vector underdog)))

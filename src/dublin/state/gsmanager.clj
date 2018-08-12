@@ -14,13 +14,12 @@
 (def current-game-state (atom MAIN-STATE))
 
 (def STATES
-  [
-  (GameState. #(mainstate/main-draw %1 %2)
-              #(mainstate/main-update %)
-              #(mainstate/main-keypressed %1 %2)
-              #(mainstate/main-keyreleased %1 %2)
-              #(mainstate/main-init)
-              (new-state-pipeline))
+  [(GameState. #(mainstate/main-draw %1 %2)
+               #(mainstate/main-update %)
+               #(mainstate/main-keypressed %1 %2)
+               #(mainstate/main-keyreleased %1 %2)
+               #(mainstate/main-init)
+               (new-state-pipeline))
                 ])
 
 (defn init-gsm
@@ -35,7 +34,8 @@
   "draw current state"
   [gr]
   (let [state-record (nth STATES @current-game-state)]
-     ((:draw-handler state-record) gr @(:pipeline-ref state-record))))
+     ((:draw-handler state-record)
+          gr @(:pipeline-ref state-record))))
 
 (defn state-update
   "Update and Draw the current game state"
@@ -49,13 +49,14 @@
     "respond to keypress event"
     [key]
     (let [state-record (nth STATES @current-game-state)]
-    ;TODO
-    ;   (reset! (:pipeline-ref state-record)
-    ((:key-press-handler state-record) key @(:pipeline-ref state-record))))
+          (reset! (:pipeline-ref state-record)
+                ((:key-press-handler state-record)
+                    key @(:pipeline-ref state-record)))))
 
 (defn keyreleased
     "respond to keyrelease event"
     [key]
     (let [state-record (nth STATES @current-game-state)]
-    ;   (reset! (:pipeline-ref state-record)
-       ((:key-release-handler state-record) key @(:pipeline-ref state-record))))
+          (reset! (:pipeline-ref state-record)
+                ((:key-release-handler state-record)
+                    key @(:pipeline-ref state-record)))))

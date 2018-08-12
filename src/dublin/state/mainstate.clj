@@ -11,20 +11,21 @@
   (environmentmanager/environment-init config/dublin))
 
 (defn main-update
+  "update the environment"
   [state]
   (environmentmanager/environment-update state))
 
 (defn main-draw
+  "draw the environment"
   [gr state]
   (environmentmanager/environment-draw gr state))
 
 (defn main-keypressed
+  "respond to key event"
   [key state]
-  ;TODO
-  (environmentmanager/environment-keypressed key state)
-)
+  (environmentmanager/environment-keypressed key state))
 
 (defn main-keyreleased
+  "respond to key release event"
   [key state]
-  ;TODO
-)
+  (environmentmanager/environment-keyreleased key state))

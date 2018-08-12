@@ -15,20 +15,24 @@
   (update-in map-preset [:mapsets]
       (fn [mapsets]
         (into [] (doall (map
-          #(update-in
+         #(update-in
             (update-in
-              (update-in % [:map-layers]
+              (update-in
+                (update-in % [:map-layers]
                                 (fn [map-layers] (tilemap-manager/load-maps map-layers)))
-                           [:map-tileset]
+                             [:map-tileset]
                                 (fn [map-tileset] (tilemap-manager/load-tileset map-tileset)))
-                           [:map-objects]
+                             [:map-objects]
                                 (fn [map-objects] (tilemap-manager/load-map-objects map-objects)))
+                             [:entities]
+                                (fn [entities] (entity-manager/load-entity-resource-sets entities)))
         mapsets))))))
 
 (defn environment-update
   "take state and perform updates"
   [state]
   ;TODO: entity code and objects
+  ;if changing mapset, move player to new mapset and dissoc from old
   (update-in state [:mapsets (:current state)]
     #(tilemap-manager/update-map-resource-set % @temp-x @temp-y)
   ))
@@ -55,7 +59,10 @@
           (= key :left)
       (reset! temp-x (- x 5))
       )
+      state
   ))
 
 (defn environment-keyreleased
-  [key state])
+  [key state]
+  state
+  )
