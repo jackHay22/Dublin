@@ -1,5 +1,7 @@
 (ns dublin.config (:gen-class))
 
+(import java.awt.Color)
+
 (def VERSION "0.1.0")
 
 (def WINDOW-TITLE "Dublin")
@@ -52,6 +54,9 @@
 ; cycle
 (defrecord MovementBinding [images total-frames key-bind frame-delay dx dy]) ;idle: on-release binding
 
+;defines a mapset specific lighting preset with color and radius
+(defrecord LightingPreset [color radius])
+
 (def main-player
       (EntitySet.
         (list
@@ -59,6 +64,7 @@
           (MovementBinding. "entities/jack_walk_l.png" 15 :left 5 -2 0)) 0 0 0 128 220 2))
 
 (def tap (MapObject. "objects/tap.png" TILE-DIM :tap :p 0 false))
+(def underdog-lighting (LightingPreset. (Color. 0 0 0 100) 75))
 
 (def underdog
       (MapSet.

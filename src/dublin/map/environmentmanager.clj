@@ -2,7 +2,8 @@
   (:require [dublin.config :as config]
             [dublin.map.environmentutils :as utils]
             [dublin.map.entity.manager :as entity-manager]
-            [dublin.map.tilemap.manager :as tilemap-manager])
+            [dublin.map.tilemap.manager :as tilemap-manager]
+            [dublin.map.lighting.manager :as lighting-manager])
   (:gen-class))
 
 (def temp-x (atom 128))
@@ -44,7 +45,7 @@
         tileset (:map-tileset mapset-to-draw)
         object-images '() ;(map #(nth (:images %) (:frame %)) (:map-objects mapset-to-draw))
         ]
-    ;TODO: temporary; integrate entities
+    ;TODO: temporary; integrate entities and lighting
     (doall (map
               #(tilemap-manager/draw-map-layer gr % tileset object-images)
             (:map-layers mapset-to-draw))
