@@ -1,6 +1,5 @@
 (ns dublin.map.lighting.manager
-  (:require [dublin.config :as config]
-            [dublin.map.environmentutils :as env-utils])
+  (:require [dublin.config :as config])
   (:gen-class))
 
 (import java.awt.geom.Point2D)
