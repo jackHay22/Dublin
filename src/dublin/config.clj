@@ -25,8 +25,8 @@
 ; Mapset defines a single location in the environment, its tilemap layers,
 ; the associated image -> tileset, any image -> objects (interactive or animated),
 ; the player (only defined when map is current), entities
-; within that map, and links to other maps in the environment
-(defrecord MapSet [map-layers map-tileset map-objects player entities maplinks])
+; within that map, links to other maps in the environment, and LightingPreset
+(defrecord MapSet [map-layers map-tileset map-objects player entities maplinks lighting])
 
 ; A maplink defines a "door" between mapsets in the environment and is defined
 ; by a proximity tile index and the index of the connected mapset
@@ -64,12 +64,11 @@
           (MovementBinding. "entities/jack_walk_l.png" 15 :left 5 -2 0)) 0 0 0 128 220 2))
 
 (def tap (MapObject. "objects/tap.png" TILE-DIM :tap :p 0 false))
-(def underdog-lighting (LightingPreset. (Color. 0 0 0 100) 75))
 
 (def underdog
       (MapSet.
         (list
-          (Layer. "maps/underdog_int_layer_0.txt" 0.90 0 0 0 0 0 0)
+          (Layer. "maps/underdog_int_layer_0.txt" 0.85 0 0 0 0 0 0)
           (Layer. "maps/underdog_int_layer_1.txt" 0.95 0 0 0 0 0 0)
           (Layer. "maps/underdog_int_layer_2.txt" 1 0 0 0 0 0 0)
           (Layer. "maps/underdog_int_layer_3.txt" 1.1 0 0 0 0 0 0))
@@ -77,6 +76,7 @@
         (list tap)
         main-player
         (list )
-        (list )))
+        (list )
+        (LightingPreset. (Color. 0 0 0 100) 75)))
 
 (def dublin (Environment. 0 (vector underdog)))

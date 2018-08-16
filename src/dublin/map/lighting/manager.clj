@@ -8,6 +8,7 @@
 (import java.awt.AlphaComposite)
 (import java.awt.image.BufferedImage)
 (import java.awt.MultipleGradientPaint)
+(import java.awt.Color)
 
 (defn render-lighting-from-preset
   "render lighting at player xy from config/LightingPreset"
@@ -17,7 +18,7 @@
         lighting-layer (BufferedImage. win-width win-height BufferedImage/TYPE_INT_ARGB)
         g2d (cast Graphics2D (.createGraphics lighting-layer))
         gradient (RadialGradientPaint.
-                    (float x) (float y)
+                    (float px) (float py)
                     (:radius preset) (float-array [0.1 1.0])
                     (into-array Color [(Color. 0.0 0.0 0.0 0.0) (:color preset)]))]
         (do

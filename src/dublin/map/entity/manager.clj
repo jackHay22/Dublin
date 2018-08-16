@@ -35,3 +35,13 @@
                 (:current-movement-index entity)))
           (:current-frame-index entity)) 0 0 ; x y
   )))
+
+(defn entity-key-update
+  "update player based on key input"
+  [entity key]
+  (let [new-animation-index (reduce #(if (= key (:key-bind %2)) (reduced %1) (inc %1)) 0 (:movements entity))]
+    (assoc entity
+      ;:current-frame-cycles
+      :current-frame-index (if (= (:current-movement-index entity) new-animation-index)
+                            (:current-frame-index entity) 0)
+      :current-movement-index new-animation-index)))

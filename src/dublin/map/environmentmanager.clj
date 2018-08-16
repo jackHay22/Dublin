@@ -46,6 +46,7 @@
         object-images '() ;(map #(nth (:images %) (:frame %)) (:map-objects mapset-to-draw))
         ]
     ;TODO: temporary; integrate entities and lighting
+    ;(lighting-manager/render-lighting-from-preset gr x y preset)
     (doall (map
               #(tilemap-manager/draw-map-layer gr % tileset object-images)
             (:map-layers mapset-to-draw))
