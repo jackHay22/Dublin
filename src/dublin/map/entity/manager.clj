@@ -7,14 +7,21 @@
 (defn load-entity-resource
   "load a single entity"
   [entity-resource]
-  (update-in entity-resource [:movements]
-    (fn [movements]
-        (doall (map (fn [move-set]
-              (update-in move-set [:images]
-                (fn [image-path]
-                    (utils/load-movement-sheet
-                        image-path (:total-frames move-set)))))
-         movements)))))
+  (let [entity-resource-images
+        (update-in entity-resource
+          [:movements]
+            (fn [movements]
+                (doall (map (fn [move-set]
+                    (update-in move-set [:images]
+                      (fn [image-path]
+                          (utils/load-movement-sheet
+                              image-path (:total-frames move-set)))))
+               movements))))]
+        (assoc entity-resource-images
+          :width (utils/max-reduce
+                    entity-resource-images :movements :images first #(.getWidth %))
+          :height (utils/max-reduce
+                    entity-resource-images :movements :images first #(.getHeight %)))))
 
 (defn load-entity-resource-sets
   "load entity set"
@@ -38,7 +45,7 @@
                  (assoc entity :current-frame-cycles cycle-update)
                  [:current-frame-index] #(if (= 0 cycle-update)
                                            (mod (inc %) (:total-frames current-movement)) %))
-                  [:x] + (:dx current-movement))
+                  [:x] + (:dx current-movement)) ;TODO: apply gravity and check intersections
                   [:y] + (:dy current-movement))))]
   (update-in
     (update-in mapset-state [:entities] (fn [entity-list]

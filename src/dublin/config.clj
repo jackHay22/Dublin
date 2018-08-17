@@ -19,6 +19,8 @@
 
 (def LINK-PROXIMITY TILE-DIM)
 
+(def GRAVITY-CONSTANT 1)
+
 ; Environment definition groups map locations
 (defrecord Environment [current mapsets])
 
@@ -47,7 +49,7 @@
 
 ; An entity set defines a list of movement bindings, the index of the current movement, the current frame of the movement,
 ; the number of times that frame has been displayed, and the entity's coordinates plus layer
-(defrecord EntitySet [movements current-movement-index current-frame-index current-frame-cycles x y layer-index])
+(defrecord EntitySet [movements current-movement-index current-frame-index current-frame-cycles x y width height layer-index])
 
 ; Movement bindings define an entity movement, the image -> images, the number of frames, the key that toggles
 ; the movement (or key release), the delay between frames, and the change in x and change in y for each update
@@ -61,7 +63,7 @@
       (EntitySet.
         (list
           (MovementBinding. "entities/jack_walk_r.png" 15 :right 5 0.8 0)
-          (MovementBinding. "entities/jack_walk_l.png" 15 :left 5 -0.8 0)) 0 0 0 128 120 2))
+          (MovementBinding. "entities/jack_walk_l.png" 15 :left 5 -0.8 0)) 0 0 0 128 120 0 0 2))
 
 (def tap (MapObject. "objects/tap.png" TILE-DIM :tap :p 0 false))
 
