@@ -67,4 +67,4 @@
   [key state]
   (update-in state [:mapsets (:current state) :player]
       #(entity-manager/entity-key-update %
-          (keyword (subs (str key "-release") 1)))))
+          (utils/get-release-keyword key))))

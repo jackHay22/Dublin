@@ -33,3 +33,7 @@
             (t current-list)
             (map t current-list)))
     complex-list transforms)))
+
+(defn get-release-keyword
+  [key]
+  (keyword (subs (str key "-release") 1)))
