@@ -6,9 +6,6 @@
             [dublin.map.lighting.manager :as lighting-manager])
   (:gen-class))
 
-(def temp-x (atom 128))
-(def temp-y (atom 220))
-
 (defn environment-init
   "take environment preset and perform loads
   map-preset is list of map sets"
@@ -19,14 +16,16 @@
          #(update-in
             (update-in
               (update-in
-                (update-in % [:map-layers]
-                                (fn [map-layers] (tilemap-manager/load-maps map-layers)))
-                             [:map-tileset]
-                                (fn [map-tileset] (tilemap-manager/load-tileset map-tileset)))
-                             [:map-objects]
-                                (fn [map-objects] (tilemap-manager/load-map-objects map-objects)))
-                             [:entities]
-                                (fn [entities] (entity-manager/load-entity-resource-sets entities)))
+                (update-in
+                  (update-in % [:map-layers]
+                                  (fn [map-layers] (tilemap-manager/load-maps map-layers)))
+                               [:map-tileset]
+                                  (fn [map-tileset] (tilemap-manager/load-tileset map-tileset)))
+                               [:map-objects]
+                                  (fn [map-objects] (tilemap-manager/load-map-objects map-objects)))
+                               [:entities]
+                                  (fn [entities] (entity-manager/load-entity-resource-sets entities)))
+                               [:player] entity-manager/load-entity-resource)
         mapsets))))))
 
 (defn environment-update
@@ -35,8 +34,8 @@
   ;TODO: entity code and objects
   ;if changing mapset, move player to new mapset and dissoc from old
   (update-in state [:mapsets (:current state)]
-    #(tilemap-manager/update-map-resource-set % @temp-x @temp-y)
-  ))
+    #(tilemap-manager/update-map-resource-set
+        (entity-manager/update-entity-resource-set %))))
 
 (defn environment-draw
   "draw environment state"
@@ -44,25 +43,25 @@
   (let [mapset-to-draw (nth (:mapsets state) (:current state))
         tileset (:map-tileset mapset-to-draw)
         object-images '() ;(map #(nth (:images %) (:frame %)) (:map-objects mapset-to-draw))
+        all-entities (cons (:player mapset-to-draw) (:entites mapset-to-draw))
         ]
-    ;TODO: temporary; integrate entities and lighting
     ;(lighting-manager/render-lighting-from-preset gr x y preset)
     (doall (map
-              #(tilemap-manager/draw-map-layer gr % tileset object-images)
-            (:map-layers mapset-to-draw))
+              #(do
+                ;lighting?
+                  (tilemap-manager/draw-map-layer gr %1 tileset object-images)
+                  (doall
+                    (map (fn [e]
+                            (if (= (:layer-index e) %2)
+                              (entity-manager/draw-entity gr e)))
+                         all-entities)))
+          (:map-layers mapset-to-draw) (range))
   )))
 
 (defn environment-keypressed
   [key state]
-  (let [x @temp-x y @temp-y]
-  ;if object key, pass location of player to map manager
-    (cond (= key :right)
-      (reset! temp-x (+ x 5))
-          (= key :left)
-      (reset! temp-x (- x 5))
-      )
-      state
-  ))
+  state
+  )
 
 (defn environment-keyreleased
   [key state]

@@ -38,16 +38,17 @@
 
 (defn update-map-resource-set
   "update all layers in set"
-  [mapset-state player-x player-y]
-  (update-in
-    (update-in mapset-state
+  [mapset-state]
+  (let [player (:player mapset-state)]
+    (update-in
+      (update-in mapset-state
         [:map-layers]
             (fn [layers]
-                (map #(utils/set-map-layer-position % player-x player-y)
+                (map #(utils/set-map-layer-position % (:x player) (:y player))
                 layers)))
         [:map-objects]
             (fn [objects]
-                (map (fn [o] (objects/action-update o)) objects))))
+                (map (fn [o] (objects/action-update o)) objects)))))
 
 (defn draw-map-layer
   "draw single map layer from set"

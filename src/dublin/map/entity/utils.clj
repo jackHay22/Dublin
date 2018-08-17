@@ -15,4 +15,4 @@
 
 (defn draw-entity-frame
   [gr img x y]
-  (env-utils/draw-image gr img x y))
+  (env-utils/draw-image gr img (int x) (int y)))

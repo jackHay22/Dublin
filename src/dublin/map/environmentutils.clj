@@ -20,4 +20,5 @@
   [gr img x y]
   (try
     (.drawImage gr img x y nil)
-    (catch Exception e (println "Dublin => Failed to render image:" img "\n" (.getMessage e)))))
+    (catch Exception e
+      (println "Dublin => Failed to render image:" img "\n" (.getMessage e)))))
