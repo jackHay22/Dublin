@@ -53,7 +53,7 @@
                   (doall
                     (map (fn [e]
                             (if (= (:layer-index e) %2)
-                              (entity-manager/draw-entity gr e)))
+                              (entity-manager/draw-entity gr e (:position-x %1) (:position-y %1))))
                          all-entities)))
           (:map-layers mapset-to-draw) (range))
   )))

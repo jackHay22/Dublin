@@ -17,17 +17,11 @@
   [gr img x y]
   (env-utils/draw-image gr img (int x) (int y)))
 
-(defn max-reduce
-    "reduce a complex list to max val with transforms"
-    [complex-list & transforms]
-    (reduce max
-      (reduce
-        (fn [current-list t]
-          (if (map? current-list)
-              (t current-list)
-              (map t current-list)))
-      complex-list transforms)))
+(defn min-reduce
+  [l & t] (env-utils/complex-attrib-reduce l min t))
 
+(defn max-reduce
+  [l & t] (env-utils/complex-attrib-reduce l max t))
 
 (defn get-bounding-coordinates
   "take entity and return set of bounds coordinates"

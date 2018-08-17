@@ -63,7 +63,7 @@
       (EntitySet.
         (list
           (MovementBinding. "entities/jack_walk_r.png" 15 :right 5 0.8 0)
-          (MovementBinding. "entities/jack_walk_l.png" 15 :left 5 -0.8 0)) 0 0 0 128 120 0 0 2))
+          (MovementBinding. "entities/jack_walk_l.png" 15 :left 5 -0.8 0)) 0 0 0 128 180 0 0 2))
 
 (def tap (MapObject. "objects/tap.png" TILE-DIM :tap :p 0 false))
 

@@ -18,9 +18,9 @@
                               image-path (:total-frames move-set)))))
                movements))))]
         (assoc entity-resource-images
-          :width (utils/max-reduce
+          :width (utils/min-reduce
                     entity-resource-images :movements :images first #(.getWidth %))
-          :height (utils/max-reduce
+          :height (utils/min-reduce
                     entity-resource-images :movements :images first #(.getHeight %)))))
 
 (defn load-entity-resource-sets
@@ -55,13 +55,13 @@
 
 (defn draw-entity
   "draw a single entity"
-  [gr entity]
+  [gr entity map-x map-y]
   (utils/draw-entity-frame
      gr (nth
          (:images
            (nth (:movements entity)
              (:current-movement-index entity)))
-         (:current-frame-index entity)) (:x entity) (:y entity)))
+         (:current-frame-index entity)) (+ (:x entity) map-x) (+ (:y entity) map-y)))
 
 (defn entity-key-update
   "update player based on key input"

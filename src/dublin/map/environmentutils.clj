@@ -22,3 +22,14 @@
     (.drawImage gr img x y nil)
     (catch Exception e
       (println "Dublin => Failed to render image:" img "\n" (.getMessage e)))))
+
+(defn complex-attrib-reduce
+  "reduce a complex list to max val with transforms"
+  [complex-list attrib transforms]
+  (reduce attrib
+    (reduce
+      (fn [current-list t]
+        (if (map? current-list)
+            (t current-list)
+            (map t current-list)))
+    complex-list transforms)))
