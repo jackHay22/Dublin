@@ -60,10 +60,11 @@
 
 (defn environment-keypressed
   [key state]
-  state
-  )
+  (update-in state [:mapsets (:current state) :player]
+      #(entity-manager/entity-key-update % key)))
 
 (defn environment-keyreleased
   [key state]
-  state
-  )
+  (update-in state [:mapsets (:current state) :player]
+      #(entity-manager/entity-key-update %
+          (keyword (subs (str key "-release") 1)))))

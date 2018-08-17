@@ -6,7 +6,7 @@ A Walk through the city.
 ```./build```
 
 ### Options
-
+- ```--release``` Creates a zip archive from the build and adds to Docker web server image
 
 ## About
 

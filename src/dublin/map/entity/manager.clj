@@ -61,14 +61,14 @@
          (:images
            (nth (:movements entity)
              (:current-movement-index entity)))
-         (:current-frame-index entity)) (+ (:x entity) map-x) (+ (:y entity) map-y)))
+         (:current-frame-index entity)) (+ (:x entity) map-x) (+ (:y entity) map-y (- (:height entity)))))
 
 (defn entity-key-update
   "update player based on key input"
   [entity key]
-  (let [new-animation-index (reduce #(if (= key (:key-bind (first %2))) (reduced (first %1)) %1) false
-                                (map vector (:movements entity) (range)))]
-    (if new-animation-index
+  (let [new-animation-index (reduce #(if (= key (:key-bind (first %2))) (reduced (second %2)) %1)
+                                          false (map vector (:movements entity) (range)))]
+    (if (and new-animation-index (not (= new-animation-index (:current-movement-index entity))))
       (assoc entity
         :current-frame-cycles 0
         :current-frame-index 0
