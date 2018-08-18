@@ -28,13 +28,11 @@
   [objects]
   (doall (map
       (fn [obj]
-        (update-in
-          (update-in obj
-                [:images]
-                  (fn [images] (utils/load-master-image-set images (:dim obj))))
-                [:action]
-                  (fn [action] (objects/resolve-function-keyword action))))
-         objects)))
+        (reduce #(update-in %1 [(first %2)] (second %2))
+            obj (map vector (list :images :action)
+                            (list #(utils/load-master-image-set % (:dim obj))
+                                  objects/resolve-function-keyword)))
+         objects))))
 
 (defn update-map-resource-set
   "update all layers in set"

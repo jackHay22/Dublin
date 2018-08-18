@@ -56,15 +56,15 @@
 ; cycle
 (defrecord MovementBinding [images total-frames key-bind frame-delay dx dy]) ;idle: on-release binding
 
-;defines a mapset specific lighting preset with color and radius
-(defrecord LightingPreset [color radius])
+; defines a mapset specific lighting preset with color-> radial gradient, radius and layer to draw on
+(defrecord LightingPreset [color radius layer])
 
 (def main-player
       (EntitySet.
         (list
           (MovementBinding. "entities/jack_idle_r.png" 1 :right-release 10 0 0)
-          (MovementBinding. "entities/jack_walk_r.png" 15 :right 7 0.6 0)
-          (MovementBinding. "entities/jack_walk_l.png" 15 :left 7 -0.6 0)) 0 0 0 128 288 0 0 2))
+          (MovementBinding. "entities/jack_walk_r.png" 15 :right 7 0.5 0)
+          (MovementBinding. "entities/jack_walk_l.png" 15 :left 7 -0.5 0)) 0 0 0 128 288 0 0 2))
 
 (def tap (MapObject. "objects/tap.png" TILE-DIM :tap :p 0 false))
 
@@ -79,7 +79,7 @@
         (list tap)
         main-player
         (list)
-        (list )
-        (LightingPreset. (Color. 0 0 0 100) 75)))
+        (list)
+        (LightingPreset. (Color. 0 0 0 80) 200 2)))
 
 (def dublin (Environment. 0 (vector underdog)))
