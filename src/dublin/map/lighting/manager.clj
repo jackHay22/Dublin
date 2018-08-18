@@ -12,14 +12,15 @@
 
 (defn render-lighting-from-preset
   "render lighting at player xy from config/LightingPreset"
-  [gr px py preset]
+  [gr map-layer px py preset]
   (let [win-width config/WINDOW-WIDTH
         win-height config/WINDOW-HEIGHT
         lighting-layer (BufferedImage. win-width win-height BufferedImage/TYPE_INT_ARGB)
         g2d (cast Graphics2D (.createGraphics lighting-layer))]
         (do
           (.setPaint g2d (RadialGradientPaint.
-                          (float px) (float py)
+                          (float (+ px (:position-x map-layer)))
+                          (float (+ py (:position-y map-layer)))
                           (float (:radius preset)) (float-array [0.1 1.0])
                           (into-array Color [(Color. 0.0 0.0 0.0 0.0) (:color preset)])))
           (.setComposite g2d (AlphaComposite/getInstance AlphaComposite/SRC_OVER 0.95))

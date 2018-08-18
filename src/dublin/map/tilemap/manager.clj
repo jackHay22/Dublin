@@ -31,8 +31,8 @@
         (reduce #(update-in %1 [(first %2)] (second %2))
             obj (map vector (list :images :action)
                             (list #(utils/load-master-image-set % (:dim obj))
-                                  objects/resolve-function-keyword)))
-         objects))))
+                                  objects/resolve-function-keyword))))
+         objects)))
 
 (defn update-map-resource-set
   "update all layers in set"
@@ -50,9 +50,8 @@
 
 (defn draw-map-layer
   "draw single map layer from set"
-  [gr mapset-layer tileset object-images]
-  (let [images (concat (:images tileset) object-images)
-        map-array (:map mapset-layer)
+  [gr mapset-layer all-images]
+  (let [map-array (:map mapset-layer)
         position-x (:position-x mapset-layer)
         position-y (:position-y mapset-layer)
         start-draw-x (:start-draw-x mapset-layer)
@@ -66,7 +65,7 @@
        (if (and (>= x 0) (>= y 0) (> map-tiles-across x) (> map-tiles-down y))
             (let [image-index (nth (nth map-array y) x)]
                   (if (not (= image-index -1))
-                      (utils/draw-tile gr (nth images image-index)
+                      (utils/draw-tile gr (nth all-images image-index)
                           (+ position-x (* x config/TILE-DIM))
                           (+ position-y (* y config/TILE-DIM)))))))))
 

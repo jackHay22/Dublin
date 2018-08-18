@@ -55,13 +55,15 @@
 
 (defn draw-entity
   "draw a single entity"
-  [gr entity map-x map-y]
+  [gr map-layer entity]
   (utils/draw-entity-frame
      gr (nth
          (:images
            (nth (:movements entity)
              (:current-movement-index entity)))
-         (:current-frame-index entity)) (+ (:x entity) map-x) (+ (:y entity) map-y (- (:height entity)))))
+         (:current-frame-index entity))
+         (+ (:x entity) (:position-x map-layer))
+         (+ (:y entity) (:position-y map-layer) (- (:height entity)))))
 
 (defn entity-key-update
   "update player based on key input"

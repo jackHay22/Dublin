@@ -38,24 +38,26 @@
   "draw environment state"
   [gr state]
   (let [mapset-to-draw (nth (:mapsets state) (:current state))
-        tileset (:map-tileset mapset-to-draw)
-        object-images '() ;(map #(nth (:images %) (:frame %)) (:map-objects mapset-to-draw))
-        all-entities (cons (:player mapset-to-draw) (:entites mapset-to-draw))
-        lighting-layer (:lighting mapset-to-draw)
-        ]
-    ;(lighting-manager/render-lighting-from-preset gr x y preset)
+        tileset-images (:images (:map-tileset mapset-to-draw)) ;TODO: add objects
+        ;(map #(nth (:images %) (:frame %)) (:map-objects mapset-to-draw))
+        lighting-preset (:lighting mapset-to-draw)
+        player (:player mapset-to-draw)
+        renderable-objects (concat (take (count (:map-layers mapset-to-draw))
+                                      (iterate (fn [p] (update-in p [0] inc))
+                                                (vector 0 #(tilemap-manager/draw-map-layer gr
+                                                            % tileset-images))))
+                                   (map (fn [entity]
+                                             (list (:layer-index entity) #(entity-manager/draw-entity gr % entity)))
+                                                  (cons player (:entites mapset-to-draw)))
+                                   (list (list (:layer lighting-preset)
+                                                #(lighting-manager/render-lighting-from-preset
+                                                      gr % (:x player) (:y player) lighting-preset))))]
     (doall (map
-              #(do
-                ;lighting?
-                  (tilemap-manager/draw-map-layer gr %1 tileset object-images)
-                  (if (= (:layer lighting-layer) %2)
-                      (lighting-manager/render-lighting-from-preset gr 125 80 lighting-layer)) ;TODO
-                  (doall
-                    (map (fn [e]
-                            (if (= (:layer-index e) %2)
-                              (entity-manager/draw-entity gr e (:position-x %1) (:position-y %1))))
-                         all-entities)))
-          (:map-layers mapset-to-draw) (range))
+              (fn [map-layer layer-index]
+                (doall
+                  (map #(if (= layer-index (first %))
+                            ((second %) map-layer)) renderable-objects)))
+              (:map-layers mapset-to-draw) (range))
   )))
 
 (defn environment-keypressed
