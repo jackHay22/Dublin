@@ -19,7 +19,7 @@
   [map-preset]
   (update-in map-preset [:mapsets]
     (fn [mapsets]
-       (into [] (doall (map
+       (into [] (doall (pmap
          (fn [mapset]
             (reduce #(update-in %1 [%2] (%2 loaders))
                 mapset (list :map-layers :map-tileset :map-objects :entities :player)))
@@ -40,7 +40,7 @@
   (let [mapset-to-draw (nth (:mapsets state) (:current state))
         tileset-images (:images (:map-tileset mapset-to-draw)) ;TODO: add objects
         ;(map #(nth (:images %) (:frame %)) (:map-objects mapset-to-draw))
-        lighting-preset (:lighting mapset-to-draw)
+        lighting-preset (:lighting-objects mapset-to-draw)
         player (:player mapset-to-draw)
         renderable-objects (concat (take (count (:map-layers mapset-to-draw))
                                       (iterate (fn [p] (update-in p [0] inc))
@@ -49,16 +49,16 @@
                                    (map (fn [entity]
                                              (list (:layer-index entity) #(entity-manager/draw-entity gr % entity)))
                                                   (cons player (:entites mapset-to-draw)))
-                                   (list (list (:layer lighting-preset)
-                                                #(lighting-manager/render-lighting-from-preset
-                                                      gr % (:x player) (:y player) lighting-preset))))]
+                                   ; (list (list (:layer lighting-preset)
+                                   ;              #(lighting-manager/render-lighting-from-preset
+                                   ;                    gr % lighting-preset)))
+                                                      )]
     (doall (map
               (fn [map-layer layer-index]
                 (doall
                   (map #(if (= layer-index (first %))
                             ((second %) map-layer)) renderable-objects)))
-              (:map-layers mapset-to-draw) (range))
-  )))
+              (:map-layers mapset-to-draw) (range)))))
 
 (defn environment-keypressed
   [key state]

@@ -11,8 +11,13 @@ JAVA_RUNTIME=`/usr/libexec/java_home -v 1.8`
 DATE=`date +%Y-%m-%d`
 
 lein_build () {
-  lein deps
+  printf "${CLOVER}  Building ${GREEN}Dublin${NC} jar... \n"
   lein uberjar || exit 1
+}
+
+install_lein() {
+  printf "${CLOVER}  Using brew to install ${YELLOW}lein${NC}... \n"
+  brew install leiningen || exit 1 #note: brew is not preferred method for lein installation
 }
 
 build_native () {
@@ -43,20 +48,16 @@ start_docker() {
 
 #check lein installation
 if command -v lein >/dev/null 2>&1; then
-  printf "${CLOVER}  Building ${GREEN}Dublin${NC} jar binary... \n"
   lein_build
 else
   printf "${CLOVER}  Warning: ${YELLOW}lein${NC} not installed, attempting to download with homebrew... \n"
   if command -v brew >/dev/null 2>&1; then
-    printf "${CLOVER}  Using brew to install ${YELLOW}lein${NC}... \n"
-    brew install leiningen || exit 1
+    install_lein
   else
     printf "${CLOVER}  Warning: ${YELLOW}brew${NC} not installed, trying to download now... \n"
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    printf "${CLOVER}  Using brew to install ${YELLOW}lein${NC}... \n"
-    brew install leiningen || exit 1 #note: this is not the preferred way to install lein
+    install_lein
   fi
-  printf "${CLOVER}  Building ${GREEN}Dublin${NC} jar binary... ${YELLOW}${1}${NC} \n"
   lein_build
 fi
 
@@ -70,9 +71,9 @@ elif [ "$1" == "--release" ]; then
   zip -r $BUILD_NAME ./Dublin.app > /dev/null 2>&1
   popd
   printf "${CLOVER}  Copying release to ${YELLOW}web/web_content/${NC}... \n"
-  cp out/bundles/Dublin-*.zip web/web_content/Dublin.zip
-  printf "${CLOVER}  Building web image... \n"
+  cp out/bundles/$BUILD_NAME web/web_content/Dublin.zip
   docker info >/dev/null 2>&1 || start_docker
+  printf "${CLOVER}  Building web image... \n"
   docker build -t downloadserver web
   printf "${BEER}  Build ${YELLOW}$VERSION${NC} release complete \n"
 else

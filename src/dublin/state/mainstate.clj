@@ -7,8 +7,7 @@
 (defn main-init
   "takes environment definition, loads,
   returns long-running state"
-  []
-  (environmentmanager/environment-init config/dublin))
+  [] (environmentmanager/environment-init config/dublin))
 
 (defn main-update
   "update the environment"

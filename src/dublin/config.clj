@@ -28,7 +28,7 @@
 ; the associated image -> tileset, any image -> objects (interactive or animated),
 ; the player (only defined when map is current), entities
 ; within that map, links to other maps in the environment, and LightingPreset
-(defrecord MapSet [map-layers map-tileset map-objects player entities maplinks lighting])
+(defrecord MapSet [map-layers map-tileset map-objects player entities maplinks lighting-objects])
 
 ; A maplink defines a "door" between mapsets in the environment and is defined
 ; by a proximity tile index and the index of the connected mapset
@@ -56,8 +56,8 @@
 ; cycle
 (defrecord MovementBinding [images total-frames key-bind frame-delay dx dy]) ;idle: on-release binding
 
-; defines a mapset specific lighting preset with color-> radial gradient, radius and layer to draw on
-(defrecord LightingPreset [color radius layer])
+; defines a mapset specific lighting preset with color-> radial gradient, radius and layer to draw on, x, y center
+(defrecord LightingPreset [color radius layer x y])
 
 (def main-player
       (EntitySet.
@@ -80,6 +80,7 @@
         main-player
         (list)
         (list)
-        (LightingPreset. (Color. 0 0 0 80) 200 2)))
+        (list
+          (LightingPreset. (Color. 0 0 0 80) 200 2 0 0))))
 
 (def dublin (Environment. 0 (vector underdog)))
