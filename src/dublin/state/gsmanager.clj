@@ -1,11 +1,11 @@
 (ns dublin.state.gsmanager
-  (:require
-            [dublin.config :as config]
+  (:require [dublin.config :as config]
             [dublin.state.mainstate :as mainstate])
   (:gen-class))
 
 (defrecord GameState [draw-handler update-handler
-                      key-press-handler key-release-handler init-handler pipeline-ref])
+                      key-press-handler key-release-handler
+                      init-handler pipeline-ref])
 
 (defn new-state-pipeline [] (atom nil))
 

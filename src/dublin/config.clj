@@ -57,7 +57,7 @@
 (defrecord MovementBinding [images total-frames key-bind frame-delay dx dy]) ;idle: on-release binding
 
 ; defines a mapset specific lighting preset with color-> radial gradient, radius and layer to draw on, x, y center
-(defrecord LightingPreset [color radius layer x y])
+(defrecord LightingPreset [color radius layer-index x y])
 
 (def main-player
       (EntitySet.
@@ -81,6 +81,6 @@
         (list)
         (list)
         (list
-          (LightingPreset. (Color. 0 0 0 80) 200 2 0 0))))
+          (LightingPreset. (Color. 0 0 0 80) 100 2 160 192))))
 
 (def dublin (Environment. 0 (vector underdog)))

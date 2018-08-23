@@ -40,7 +40,7 @@
   (let [mapset-to-draw (nth (:mapsets state) (:current state))
         tileset-images (:images (:map-tileset mapset-to-draw)) ;TODO: add objects
         ;(map #(nth (:images %) (:frame %)) (:map-objects mapset-to-draw))
-        lighting-preset (:lighting-objects mapset-to-draw)
+        lighting-preset-list (:lighting-objects mapset-to-draw)
         player (:player mapset-to-draw)
         renderable-objects (concat (take (count (:map-layers mapset-to-draw))
                                       (iterate (fn [p] (update-in p [0] inc))
@@ -49,10 +49,10 @@
                                    (map (fn [entity]
                                              (list (:layer-index entity) #(entity-manager/draw-entity gr % entity)))
                                                   (cons player (:entites mapset-to-draw)))
-                                   ; (list (list (:layer lighting-preset)
-                                   ;              #(lighting-manager/render-lighting-from-preset
-                                   ;                    gr % lighting-preset)))
-                                                      )]
+                                   (map (fn [light-preset]
+                                            (list (:layer-index light-preset)
+                                                  #(lighting-manager/render-lighting-from-preset gr % light-preset))) 
+                                        lighting-preset-list))]
     (doall (map
               (fn [map-layer layer-index]
                 (doall
