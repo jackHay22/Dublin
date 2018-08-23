@@ -76,11 +76,20 @@
           (Layer. "maps/underdog_int_layer_2.txt" 1 0 0 0 0 0 0)
           (Layer. "maps/underdog_int_layer_3.txt" 1.1 0 0 0 0 0 0))
         (TileSet. "tiles/underdog_int.png" TILE-DIM)
+        ;objects
         (list tap)
+        ;player
         main-player
+        ;entities
         (list)
+        ;links
         (list)
+        ;lighting
         (list
-          (LightingPreset. (Color. 0 0 0 80) 100 2 160 192))))
+          ; (LightingPreset. (Color. 0 0 0 80) 200 1 160 160)
+          ; (LightingPreset. (Color. 0 0 0 40) 300 1 280 160)
+          ; (LightingPreset. (Color. 0 0 0 40) 300 1 340 160)
+          ; (LightingPreset. (Color. 0 0 0 40) 300 1 400 160)
+          )))
 
 (def dublin (Environment. 0 (vector underdog)))
