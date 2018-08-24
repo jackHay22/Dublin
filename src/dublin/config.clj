@@ -91,13 +91,15 @@
           ; (LightingPreset. (Color. 0 0 0 40) 300 1 340 160)
           ; (LightingPreset. (Color. 0 0 0 40) 300 1 400 160)
           )))
-(def oslo-station
+
+(def frognerseteren-station
   (MapSet.
     (list
-      (Layer. "maps/frognerseteren_station_layer_0.txt" 0 0 0 0 0 0 0)
+      (Layer. "maps/frognerseteren_station_layer_0.txt" 0.05 0 0 0 0 0 0)
       (Layer. "maps/frognerseteren_station_layer_1.txt" 0.95 0 0 0 0 0 0)
       (Layer. "maps/frognerseteren_station_layer_2.txt" 1 0 0 0 0 0 0)
-      (Layer. "maps/frognerseteren_station_layer_3.txt" 1.1 0 0 0 0 0 0))
+      (Layer. "maps/frognerseteren_station_layer_3.txt" 1.1 0 0 0 0 0 0)
+      (Layer. "maps/frognerseteren_station_layer_4.txt" 1.12 0 0 0 0 0 0))
       (TileSet. "tiles/frognerseteren_station.png" TILE-DIM)
       (list)
       main-player
@@ -106,4 +108,6 @@
       (list)
       ))
 
-(def dublin (Environment. 0 (vector oslo-station underdog)))
+(def dublin
+  (Environment. 0
+    (vector frognerseteren-station underdog)))
