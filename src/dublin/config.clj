@@ -64,7 +64,7 @@
         (list
           (MovementBinding. "entities/jack_idle_r.png" 1 :right-release 10 0 0)
           (MovementBinding. "entities/jack_walk_r.png" 15 :right 7 0.6 0)
-          (MovementBinding. "entities/jack_walk_l.png" 15 :left 7 -0.6 0)) 0 0 0 128 288 0 0 2))
+          (MovementBinding. "entities/jack_walk_l.png" 15 :left 7 -0.6 0)) 0 0 0 128 192 0 0 2)) ;underdog: 128 288
 
 (def tap (MapObject. "objects/tap.png" TILE-DIM :tap :p 0 false))
 
@@ -91,5 +91,19 @@
           ; (LightingPreset. (Color. 0 0 0 40) 300 1 340 160)
           ; (LightingPreset. (Color. 0 0 0 40) 300 1 400 160)
           )))
+(def oslo-station
+  (MapSet.
+    (list
+      (Layer. "maps/frognerseteren_station_layer_0.txt" 0 0 0 0 0 0 0)
+      (Layer. "maps/frognerseteren_station_layer_1.txt" 0.95 0 0 0 0 0 0)
+      (Layer. "maps/frognerseteren_station_layer_2.txt" 1 0 0 0 0 0 0)
+      (Layer. "maps/frognerseteren_station_layer_3.txt" 1.1 0 0 0 0 0 0))
+      (TileSet. "tiles/frognerseteren_station.png" TILE-DIM)
+      (list)
+      main-player
+      (list)
+      (list)
+      (list)
+      ))
 
-(def dublin (Environment. 0 (vector underdog)))
+(def dublin (Environment. 0 (vector oslo-station underdog)))

@@ -11,4 +11,4 @@
     (System/setProperty "sun.java2d.opengl" "true")
     (gsm/init-gsm)
     (engine/start-window config/WINDOW-TITLE config/WINDOW-WIDTH
-            config/WINDOW-HEIGHT config/SCALE-FACTOR config/FRAMERATE)))
+      config/WINDOW-HEIGHT config/SCALE-FACTOR config/FRAMERATE)))
