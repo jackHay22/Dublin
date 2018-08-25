@@ -45,13 +45,15 @@
                  (assoc entity :current-frame-cycles cycle-update)
                  [:current-frame-index] #(if (= 0 cycle-update)
                                            (mod (inc %) (:total-frames current-movement)) %))
-                  [:x] + (:dx current-movement)) ;TODO: apply gravity and check intersections
-                  [:y] + (:dy current-movement))))]
+                  [:x] + (:dx current-movement))
+                  [:y] + (:dy current-movement)))) ; config/GRAVITY-CONSTANT (TODO: separate dx dy changes)
+        collision-transform
+            #(let [entity-update-check (make-entity-frame-update %)]
+                  (if (utils/entity-map-intersection? mapset-state entity-update-check)
+                      % entity-update-check))]
   (update-in
     (update-in mapset-state [:entities] (fn [entity-list]
-      (map
-        make-entity-frame-update
-        entity-list))) [:player] make-entity-frame-update)))
+      (map collision-transform entity-list))) [:player] collision-transform)))
 
 (defn draw-entity
   "draw a single entity"

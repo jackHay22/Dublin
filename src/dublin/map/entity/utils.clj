@@ -30,4 +30,18 @@
     (take 4
       (cycle (list (:x entity) (+ (:x entity) (:width entity)))))
     (mapcat
-      (fn [n] (repeat 2 (+ n (:y entity)))) (list 0 (:height entity)))))
+      (fn [n] (repeat 2 (- (:y entity) n))) (list 0 (:height entity)))))
+
+(defn position-to-tile-index
+  "convert a position x,y to tilemap indices"
+  [pos]
+  (map #(int (/ % config/TILE-DIM)) pos))
+
+(defn entity-map-intersection?
+  "if entity intersects with non -1 tile at px,py, return true"
+  [mapset-state entity]
+  (let [current-map (:map (nth (:map-layers mapset-state) (:layer-index entity)))]
+        (reduce #(if (not (= -1 (nth (nth current-map (second %2)) (first %2))))
+                      (reduced true) false)
+                false (map position-to-tile-index
+                          (get-bounding-coordinates entity)))))

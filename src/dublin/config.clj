@@ -19,7 +19,7 @@
 
 (def LINK-PROXIMITY TILE-DIM)
 
-(def GRAVITY-CONSTANT 1)
+(def GRAVITY-CONSTANT 0.2)
 
 ; Environment definition groups map locations
 (defrecord Environment [current mapsets])
@@ -64,7 +64,7 @@
         (list
           (MovementBinding. "entities/jack_idle_r.png" 1 :right-release 10 0 0)
           (MovementBinding. "entities/jack_walk_r.png" 15 :right 7 0.6 0)
-          (MovementBinding. "entities/jack_walk_l.png" 15 :left 7 -0.6 0)) 0 0 0 128 192 0 0 2)) ;underdog: 128 288
+          (MovementBinding. "entities/jack_walk_l.png" 15 :left 7 -0.6 0)) 0 0 0 128 190 0 0 2)) ;underdog: 128 288
 
 (def tap (MapObject. "objects/tap.png" TILE-DIM :tap :p 0 false))
 
@@ -95,7 +95,7 @@
 (def frognerseteren-station
   (MapSet.
     (list
-      (Layer. "maps/frognerseteren_station_layer_0.txt" 0.05 0 0 0 0 0 0)
+      (Layer. "maps/frognerseteren_station_layer_0.txt" 0 0 0 0 0 0 0)
       (Layer. "maps/frognerseteren_station_layer_1.txt" 0.95 0 0 0 0 0 0)
       (Layer. "maps/frognerseteren_station_layer_2.txt" 1 0 0 0 0 0 0)
       (Layer. "maps/frognerseteren_station_layer_3.txt" 1.1 0 0 0 0 0 0)
