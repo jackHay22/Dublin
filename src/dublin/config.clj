@@ -2,7 +2,7 @@
 
 (import java.awt.Color)
 
-(def VERSION "0.2.0")
+(def VERSION "0.3.0")
 
 (def WINDOW-TITLE "Dublin")
 
@@ -105,8 +105,7 @@
       main-player
       (list)
       (list)
-      (list)
-      ))
+      (list)))
 
 (def dublin
   (Environment. 0
