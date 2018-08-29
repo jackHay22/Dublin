@@ -55,10 +55,9 @@
 
 (defn environment-keypressed
   [key state]
-  ;(utils/check-links
+  (utils/check-links
     (update-in state [:mapsets (:current state) :player]
-        #(entity-manager/entity-key-update % key)) ;key loaders))
-        )
+        #(entity-manager/entity-key-update % key)) key loaders))
 
 (defn environment-keyreleased
   [key state]

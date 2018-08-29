@@ -58,28 +58,25 @@
     (assoc-in env-state [:mapsets (:current env-state) :player :x] new-x)
                         [:mapsets (:current env-state) :player :y] new-y))
 
-; (defn match-links
-;   [viable-links env-state]
-;   (let [linked-targets ])
-;   )
-
 (defn check-links
-  "if key is linked key, make-mapset-move"
+  "if key is linked key, make-mapset-move
+  check for viable maplinks within a proximity of the player
+  if any found, check the mapset they index to and get the corresponding link
+  then update the environment map index and player location"
   [env-state key loaders]
   (if (= key config/MAP-LINK-CONTROLLER)
       (let [current-mapset (nth (:mapsets env-state) (:current env-state))
             current-player (:player current-mapset)
-            viable-links (filter
-                            #(> config/LINK-PROXIMITY
-                                (get-distance (:x current-player) (:y current-player)
-                                              (:px %) (:py %))) (:maplinks current-mapset))]
-            (if (not (empty? viable-links))
-                (let [dest-link (first
-                                  (:maplinks (nth (:mapsets env-state)
-                                                  (:set-index (first viable-links)))))]
-                (make-player-location-update
-                  (init-current-mapset
-                    (assoc env-state :current (:set-index (first viable-links)))
-                  loaders) (:px dest-link) (:py dest-link)))
+            viable-link (reduce #(if (> config/LINK-PROXIMITY
+                                        (get-distance (:x current-player) (:y current-player)
+                                                      (:px %2) (:py %2))) (reduced %2) nil) nil (:maplinks current-mapset))]
+            (if viable-link
+                (let [dest-link (reduce #(if (= (:current env-state) (:set-index %2)) (reduced %2) nil)
+                                          nil (:maplinks (nth (:mapsets env-state)
+                                                      (:set-index viable-link))))]
+                      (make-player-location-update
+                        (init-current-mapset
+                          (assoc env-state :current (:set-index viable-link))
+                        loaders) (:px dest-link) (:py dest-link)))
                 env-state))
         env-state))
