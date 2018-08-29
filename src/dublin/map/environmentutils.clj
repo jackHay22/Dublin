@@ -11,6 +11,7 @@
 (import java.awt.image.AffineTransformOp)
 
 (defn init-current-mapset
+  "load the current mapset in the environment given load fn set"
   [env-state loaders]
   (update-in env-state [:mapsets (:current env-state)]
     (fn [mapset]
@@ -58,12 +59,6 @@
     (assoc-in env-state [:mapsets (:current env-state) :player :x] new-x)
                         [:mapsets (:current env-state) :player :y] new-y))
 
-(defn reduce-first
-  "take a predicate and a set and reduce to
-  the first found or return nil (common pattern)"
-  [pred-fn arg-set]
-  (reduce #(if (pred-fn %2) (reduced %2) nil) nil arg-set))
-
 (defn check-links
   "if key is linked key, make-mapset-move
   check for viable maplinks within a proximity of the player
@@ -81,15 +76,15 @@
                         ;if viable, transform into destination reduce
                         (reduced
                           (reduce
-                            (fn [orig-env-2 target-mapset-link]
+                            (fn [orig-env-nested target-mapset-link]
                                 (if (= (:current env-state) (:set-index target-mapset-link))
                                     (reduced
                                       ;both links found, make state transform
                                       (make-player-location-update
                                         (init-current-mapset
-                                          (assoc orig-env-2 :current (:set-index current-mapset-link))
+                                          (assoc orig-env-nested :current (:set-index current-mapset-link))
                                         loaders) (:px target-mapset-link) (:py target-mapset-link)))
-                                orig-env-2))
+                                orig-env-nested))
                               orig-env (:maplinks (nth (:mapsets env-state)
                                       (:set-index current-mapset-link)))))
                             orig-env)) env-state (:maplinks current-mapset)))
