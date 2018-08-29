@@ -72,18 +72,25 @@
   [env-state key loaders]
   (if (= key config/MAP-LINK-CONTROLLER)
       (let [current-mapset (nth (:mapsets env-state) (:current env-state))
-            current-player (:player current-mapset)
-            viable-link (reduce-first #(> config/LINK-PROXIMITY
-                                        (get-distance (:x current-player) (:y current-player)
-                                                      (:px %) (:py %)))
-                                      (:maplinks current-mapset))]
-            (if viable-link
-                (let [dest-link (reduce-first #(= (:current env-state) (:set-index %))
-                                              (:maplinks (nth (:mapsets env-state)
-                                                      (:set-index viable-link))))]
-                      (make-player-location-update
-                        (init-current-mapset
-                          (assoc env-state :current (:set-index viable-link))
-                        loaders) (:px dest-link) (:py dest-link)))
-                env-state))
-        env-state))
+            current-player (:player current-mapset)]
+            (reduce (fn [orig-env current-mapset-link]
+                    ;check player proximity to current link
+                    (if (> config/LINK-PROXIMITY
+                           (get-distance (:x current-player) (:y current-player)
+                                         (:px current-mapset-link) (:py current-mapset-link)))
+                        ;if viable, transform into destination reduce
+                        (reduced
+                          (reduce
+                            (fn [orig-env-2 target-mapset-link]
+                                (if (= (:current env-state) (:set-index target-mapset-link))
+                                    (reduced
+                                      ;both links found, make state transform
+                                      (make-player-location-update
+                                        (init-current-mapset
+                                          (assoc orig-env-2 :current (:set-index current-mapset-link))
+                                        loaders) (:px target-mapset-link) (:py target-mapset-link)))
+                                orig-env-2))
+                              orig-env (:maplinks (nth (:mapsets env-state)
+                                      (:set-index current-mapset-link)))))
+                            orig-env)) env-state (:maplinks current-mapset)))
+          env-state))
