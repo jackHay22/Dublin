@@ -3,13 +3,6 @@
             [clojure.java.io :as io])
   (:gen-class))
 
-(import java.awt.Image)
-(import java.awt.AlphaComposite)
-(import java.awt.image.RescaleOp)
-(import java.awt.image.BufferedImage)
-(import java.awt.geom.AffineTransform)
-(import java.awt.image.AffineTransformOp)
-
 (defn init-current-mapset
   "load the current mapset in the environment given load fn set"
   [env-state loaders]
