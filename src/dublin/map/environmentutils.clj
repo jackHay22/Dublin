@@ -33,12 +33,12 @@
 (defn get-release-keyword
   [key] (keyword (subs (str key "-release") 1)))
 
-(def square (fn [x] (* x x)))
+(def ** (fn [x] (* x x)))
 
 (defn get-distance
   "get the distance between two points"
   [x1 y1 x2 y2]
-  (Math/sqrt (+ (square (- x2 x1)) (square (- y2 y1)))))
+  (Math/sqrt (+ (** (- x2 x1)) (** (- y2 y1)))))
 
 (defn complex-attrib-reduce
   "reduce a complex list to max val with transforms"
@@ -58,6 +58,12 @@
     (assoc-in env-state [:mapsets (:current env-state) :player :x] new-x)
                         [:mapsets (:current env-state) :player :y] new-y))
 
+(defn reduce-first
+  "take a predicate and a set and reduce to
+  the first found or return nil (common pattern)"
+  [pred-fn arg-set]
+  (reduce #(if (pred-fn %2) (reduced %2) nil) nil arg-set))
+
 (defn check-links
   "if key is linked key, make-mapset-move
   check for viable maplinks within a proximity of the player
@@ -67,12 +73,13 @@
   (if (= key config/MAP-LINK-CONTROLLER)
       (let [current-mapset (nth (:mapsets env-state) (:current env-state))
             current-player (:player current-mapset)
-            viable-link (reduce #(if (> config/LINK-PROXIMITY
+            viable-link (reduce-first #(> config/LINK-PROXIMITY
                                         (get-distance (:x current-player) (:y current-player)
-                                                      (:px %2) (:py %2))) (reduced %2) nil) nil (:maplinks current-mapset))]
+                                                      (:px %) (:py %)))
+                                      (:maplinks current-mapset))]
             (if viable-link
-                (let [dest-link (reduce #(if (= (:current env-state) (:set-index %2)) (reduced %2) nil)
-                                          nil (:maplinks (nth (:mapsets env-state)
+                (let [dest-link (reduce-first #(= (:current env-state) (:set-index %))
+                                              (:maplinks (nth (:mapsets env-state)
                                                       (:set-index viable-link))))]
                       (make-player-location-update
                         (init-current-mapset
