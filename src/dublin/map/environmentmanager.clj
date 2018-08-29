@@ -7,23 +7,16 @@
   (:gen-class))
 
 (def loaders
-  {:map-layers tilemap-manager/load-maps
-   :map-tileset tilemap-manager/load-tileset
-   :map-objects tilemap-manager/load-map-objects
-   :entities entity-manager/load-entity-resource-sets
-   :player entity-manager/load-entity-resource})
+    {:map-layers tilemap-manager/load-maps
+     :map-tileset tilemap-manager/load-tileset
+     :map-objects tilemap-manager/load-map-objects
+     :entities entity-manager/load-entity-resource-sets
+     :player entity-manager/load-entity-resource})
 
 (defn environment-init
-  "take environment preset and perform loads
-  map-preset is list of map sets"
-  [map-preset]
-  (update-in map-preset [:mapsets]
-    (fn [mapsets]
-       (into [] (doall (pmap
-         (fn [mapset]
-            (reduce #(update-in %1 [%2] (%2 loaders))
-                mapset (list :map-layers :map-tileset :map-objects :entities :player)))
-        mapsets))))))
+  "load the current mapset within the environment preset"
+  [environment-preset]
+  (utils/init-current-mapset environment-preset loaders))
 
 (defn environment-update
   "take state and perform updates"
@@ -51,7 +44,7 @@
                                                   (cons player (:entites mapset-to-draw)))
                                    (map (fn [light-preset]
                                             (list (:layer-index light-preset)
-                                                  #(lighting-manager/render-lighting-from-preset gr % light-preset))) 
+                                                  #(lighting-manager/render-lighting-from-preset gr % light-preset)))
                                         lighting-preset-list))]
     (doall (map
               (fn [map-layer layer-index]
@@ -62,8 +55,10 @@
 
 (defn environment-keypressed
   [key state]
-  (update-in state [:mapsets (:current state) :player]
-      #(entity-manager/entity-key-update % key)))
+  ;(utils/check-links
+    (update-in state [:mapsets (:current state) :player]
+        #(entity-manager/entity-key-update % key)) ;key loaders))
+        )
 
 (defn environment-keyreleased
   [key state]

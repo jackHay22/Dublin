@@ -21,8 +21,10 @@
 
 (def GRAVITY-CONSTANT 0.2)
 
+(def MAP-LINK-CONTROLLER :open)
+
 ; Environment definition groups map locations
-(defrecord Environment [current mapsets])
+(defrecord Environment [current mapsets minigames])
 
 ; Mapset defines a single location in the environment, its tilemap layers,
 ; the associated image -> tileset, any image -> objects (interactive or animated),
@@ -59,22 +61,25 @@
 ; defines a mapset specific lighting preset with color-> radial gradient, radius and layer to draw on, x, y center
 (defrecord LightingPreset [color radius layer-index x y])
 
+; defines a minigame
+(defrecord Minigame [])
+
 (def main-player
       (EntitySet.
         (list
           (MovementBinding. "entities/jack_idle_r.png" 1 :right-release 10 0 0)
           (MovementBinding. "entities/jack_walk_r.png" 15 :right 7 0.6 0)
-          (MovementBinding. "entities/jack_walk_l.png" 15 :left 7 -0.6 0)) 0 0 0 128 190 0 0 2)) ;underdog: 128 288
+          (MovementBinding. "entities/jack_walk_l.png" 15 :left 7 -0.6 0)) 0 0 0 130 280 0 0 2)) ;underdog: 128 288 ;station 128 190
 
 (def tap (MapObject. "objects/tap.png" TILE-DIM :tap :p 0 false))
 
 (def underdog
       (MapSet.
         (list
-          (Layer. "maps/underdog_int_layer_0.txt" 0.85 0 0 0 0 0 0)
-          (Layer. "maps/underdog_int_layer_1.txt" 0.95 0 0 0 0 0 0)
-          (Layer. "maps/underdog_int_layer_2.txt" 1 0 0 0 0 0 0)
-          (Layer. "maps/underdog_int_layer_3.txt" 1.1 0 0 0 0 0 0))
+          (Layer. "maps/dublin/underdog_int_layer_0.txt" 0.85 0 0 0 0 0 0)
+          (Layer. "maps/dublin/underdog_int_layer_1.txt" 0.95 0 0 0 0 0 0)
+          (Layer. "maps/dublin/underdog_int_layer_2.txt" 1 0 0 0 0 0 0)
+          (Layer. "maps/dublin/underdog_int_layer_3.txt" 1.1 0 0 0 0 0 0))
         (TileSet. "tiles/underdog_int.png" TILE-DIM)
         ;objects
         (list tap)
@@ -83,7 +88,9 @@
         ;entities
         (list)
         ;links
-        (list)
+        (list
+            (MapLink. 128 288 0)
+            )
         ;lighting
         (list
           ; (LightingPreset. (Color. 0 0 0 80) 200 1 160 160)
@@ -95,18 +102,21 @@
 (def frognerseteren-station
   (MapSet.
     (list
-      (Layer. "maps/frognerseteren_station_layer_0.txt" 0 0 0 0 0 0 0)
-      (Layer. "maps/frognerseteren_station_layer_1.txt" 0.95 0 0 0 0 0 0)
-      (Layer. "maps/frognerseteren_station_layer_2.txt" 1 0 0 0 0 0 0)
-      (Layer. "maps/frognerseteren_station_layer_3.txt" 1.1 0 0 0 0 0 0)
-      (Layer. "maps/frognerseteren_station_layer_4.txt" 1.12 0 0 0 0 0 0))
+      (Layer. "maps/oslo/frognerseteren_station_layer_0.txt" 0 0 0 0 0 0 0)
+      (Layer. "maps/oslo/frognerseteren_station_layer_1.txt" 0.95 0 0 0 0 0 0)
+      (Layer. "maps/oslo/frognerseteren_station_layer_2.txt" 1 0 0 0 0 0 0)
+      (Layer. "maps/oslo/frognerseteren_station_layer_3.txt" 1.1 0 0 0 0 0 0)
+      (Layer. "maps/oslo/frognerseteren_station_layer_4.txt" 1.12 0 0 0 0 0 0))
       (TileSet. "tiles/frognerseteren_station.png" TILE-DIM)
       (list)
       main-player
       (list)
-      (list)
+      (list
+          (MapLink. 128 190 1)
+          )
       (list)))
 
 (def dublin
-  (Environment. 0
-    (vector frognerseteren-station underdog)))
+  (Environment. 1
+    (vector frognerseteren-station underdog)
+    (vector )))
