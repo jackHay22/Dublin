@@ -1,4 +1,4 @@
-(defproject dublin "0.3.0-SNAPSHOT"
+(defproject dublin "0.3.1-SNAPSHOT"
   :description "A walk through Dublin"
   :dependencies [[org.clojure/clojure "1.9.0"]]
   :main ^:skip-aot dublin.core

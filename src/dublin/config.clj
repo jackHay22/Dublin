@@ -2,7 +2,7 @@
 
 (import java.awt.Color)
 
-(def VERSION "0.3.0")
+(def VERSION "0.3.1")
 
 (def WINDOW-TITLE "Dublin")
 
