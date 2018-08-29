@@ -32,7 +32,7 @@ build_native () {
       -title "Dublin" \
       -Bruntime=${JAVA_RUNTIME} \
       -Bicon=resources/app/dublin.icns && \
-  printf "${BEER}  ${GREEN}Dublin.app${NC} built to ${CYAN}/out/bundles/Dublin${NC}. \n"
+  printf "${BEER}  ${GREEN}Dublin.app${NC} built to ${YELLOW}/out/bundles/Dublin${NC}. \n"
 }
 
 start_docker() {
