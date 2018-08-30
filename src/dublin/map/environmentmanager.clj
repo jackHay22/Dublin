@@ -7,7 +7,8 @@
   (:gen-class))
 
 (def loaders
-    {:map-layers tilemap-manager/load-maps
+    {:src config/dublin
+     :map-layers tilemap-manager/load-maps
      :map-tileset tilemap-manager/load-tileset
      :map-objects tilemap-manager/load-map-objects
      :entities entity-manager/load-entity-resource-sets
