@@ -22,8 +22,6 @@
 (defn environment-update
   "take state and perform updates"
   [state]
-  ;TODO: entity code and objects
-  ;if changing mapset, move player to new mapset and dissoc from old
   (update-in state [:mapsets (:current state)]
     #(tilemap-manager/update-map-resource-set
         (entity-manager/update-entity-resource-set %))))

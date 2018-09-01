@@ -79,7 +79,6 @@
                             (fn [orig-env-nested target-mapset-link]
                                 (if (= (:current env-state) (:set-index target-mapset-link))
                                     (reduced
-                                      ;both links found, make state transform
                                       (unload-mapset-to-preset
                                         (make-player-location-update
                                           (init-current-mapset

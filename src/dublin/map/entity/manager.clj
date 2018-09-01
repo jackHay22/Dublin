@@ -32,28 +32,32 @@
   "update all entities in set"
   [mapset-state]
   (let [make-entity-frame-update
-          (fn [entity]
-            (let [current-movement (nth
-                        (:movements entity)
-                        (:current-movement-index entity))
-                  cycle-update (mod
-                        (inc (:current-frame-cycles entity))
-                        (:frame-delay current-movement))]
-             (update-in
-             (update-in
+          (fn [entity current-movement]
+            (let [cycle-update
+                      (mod (inc (:current-frame-cycles entity))
+                           (:frame-delay current-movement))]
                (update-in
                  (assoc entity :current-frame-cycles cycle-update)
                  [:current-frame-index] #(if (= 0 cycle-update)
-                                           (mod (inc %) (:total-frames current-movement)) %))
-                  [:x] + (:dx current-movement))
-                  [:y] + (:dy current-movement)))) ; config/GRAVITY-CONSTANT (TODO: separate dx dy changes)
-        collision-transform
-            #(let [entity-update-check (make-entity-frame-update %)]
-                  (if (utils/entity-map-intersection? mapset-state entity-update-check)
-                      % entity-update-check))]
+                                           (mod (inc %) (:total-frames current-movement)) %))))
+        try-movement-update (fn [state operation]
+                                (let [try-update (update-in state [(first operation)] + (second operation))]
+                                      (if (utils/entity-map-intersection? mapset-state try-update)
+                                          state try-update)))
+        collision-transform (fn [entity] (let [current-movement
+                                                (nth
+                                                  (:movements entity)
+                                                  (:current-movement-index entity))]
+                                              (reduce try-movement-update
+                                                  (make-entity-frame-update entity current-movement)
+                                                  (list
+                                                    (list :x (:dx current-movement))
+                                                    (list :y (:dy current-movement))
+                                                    (list :y config/GRAVITY-CONSTANT)))))]
   (update-in
-    (update-in mapset-state [:entities] (fn [entity-list]
-      (map collision-transform entity-list))) [:player] collision-transform)))
+    (update-in mapset-state
+      [:entities] #(map collision-transform %))
+      [:player] collision-transform)))
 
 (defn draw-entity
   "draw a single entity"
