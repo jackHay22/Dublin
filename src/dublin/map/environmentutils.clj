@@ -9,7 +9,7 @@
   (update-in env-state [:mapsets (:current env-state)]
     (fn [mapset]
       (reduce #(update-in %1 [%2] (%2 loaders))
-         mapset (list :map-layers :map-tileset :map-objects :entities :player)))))
+         mapset (keys loaders)))))
 
 (defn unload-mapset-to-preset
   "unload the indexed mapset to the config preset (free up memory)"
@@ -58,12 +58,35 @@
     (assoc-in env-state [:mapsets (:current env-state) :player :x] new-x)
                         [:mapsets (:current env-state) :player :y] new-y))
 
+(defn position-to-tile-index
+  "convert a position x,y to tilemap indices"
+  [pos]
+  (map #(int (/ % config/TILE-DIM)) pos))
+
+(defn get-tile-at
+  "return the tile at indices"
+  [mapset-state layer & indices]
+  (reduce nth
+      (:map (nth (:map-layers mapset-state) layer)) indices))
+
+(defn check-key-context
+  [key state]
+  (let [current-mapset (nth (:mapsets state) (:current state))
+        player (:player current-mapset)
+        tile-x (+ (:x player) (:width player))
+        ;indices (position-to-tile-index)
+        ; (get-tile-at current-mapset
+        ;         (:layer-index player) (first indices) (second indices))
+        tilemarkers (:tile-markers current-mapset)]
+        key
+        ))
+
 (defn check-links
   "if key is linked key, make-mapset-move
   check for viable maplinks within a proximity of the player
   if any found, check the mapset they index to and get the corresponding link
   then update the environment map index and player location"
-  [env-state key loaders]
+  [env-state key loaders config-src]
   (if (= key config/MAP-LINK-CONTROLLER)
       (let [current-mapset-index (:current env-state)
             current-mapset (nth (:mapsets env-state) current-mapset-index)
@@ -84,7 +107,7 @@
                                           (init-current-mapset
                                             (assoc orig-env-nested :current (:set-index current-mapset-link))
                                           loaders) (:px target-mapset-link) (:py target-mapset-link))
-                                          (:src loaders) current-mapset-index))
+                                          config-src current-mapset-index))
                                 orig-env-nested))
                               orig-env (:maplinks (nth (:mapsets env-state)
                                       (:set-index current-mapset-link)))))

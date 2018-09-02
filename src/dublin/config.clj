@@ -30,7 +30,7 @@
 ; the associated image -> tileset, any image -> objects (interactive or animated),
 ; the player (only defined when map is current), entities
 ; within that map, links to other maps in the environment, and LightingPreset
-(defrecord MapSet [map-layers map-tileset map-objects player entities maplinks lighting-objects])
+(defrecord MapSet [map-layers tile-markers map-tileset map-objects player entities maplinks lighting-objects])
 
 ; A maplink defines a "door" between mapsets in the environment and is defined
 ; by a proximity tile index and the index of the connected mapset
@@ -61,6 +61,9 @@
 ; defines a mapset specific lighting preset with color-> radial gradient, radius and layer to draw on, x, y center
 (defrecord LightingPreset [color radius layer-index x y])
 
+; defines a tile index - label mapping
+(defrecord TileMarker [index marker])
+
 ; defines a minigame
 (defrecord Minigame [])
 
@@ -68,6 +71,7 @@
       (EntitySet.
         (list
           (MovementBinding. "entities/jack_idle_r.png" 1 :right-release 10 0 0)
+          ;:stairs
           (MovementBinding. "entities/jack_walk_r.png" 15 :right 7 0.6 0)
           (MovementBinding. "entities/jack_walk_l.png" 15 :left 7 -0.6 0)) 0 0 0 130 280 0 0 2)) ;underdog: 128 288 ;station 128 190
 
@@ -80,6 +84,8 @@
           (Layer. "maps/dublin/underdog_int_layer_1.txt" 0.95 0 0 0 0 0 0)
           (Layer. "maps/dublin/underdog_int_layer_2.txt" 1 0 0 0 0 0 0)
           (Layer. "maps/dublin/underdog_int_layer_3.txt" 1.1 0 0 0 0 0 0))
+        ;tile markers
+        (list (TileMarker. 3 :stair))
         (TileSet. "tiles/underdog_int.png" TILE-DIM)
         ;objects
         (list tap)
@@ -89,7 +95,8 @@
         (list)
         ;links
         (list
-            (MapLink. 128 288 0)
+            (MapLink. 128 286 0)
+            (MapLink. 300 286 2)
             )
         ;lighting
         (list
@@ -107,6 +114,8 @@
       (Layer. "maps/oslo/frognerseteren_station_layer_2.txt" 1 0 0 0 0 0 0)
       (Layer. "maps/oslo/frognerseteren_station_layer_3.txt" 1.1 0 0 0 0 0 0)
       (Layer. "maps/oslo/frognerseteren_station_layer_4.txt" 1.12 0 0 0 0 0 0))
+      ;tile markers
+      (list)
       (TileSet. "tiles/frognerseteren_station.png" TILE-DIM)
       (list)
       main-player
@@ -114,9 +123,31 @@
       (list
           (MapLink. 128 190 1)
           )
-      (list)))
+      (list
+        ;(LightingPreset. (Color. 0 0 0 80) 600 1 460 0)
+        )))
+
+(def trinity-range
+  (MapSet.
+    (list
+      (Layer. "maps/dublin/trinity_range_layer_0.txt" 0.86 0 0 0 0 0 0)
+      (Layer. "maps/dublin/trinity_range_layer_1.txt" 0.90 0 0 0 0 0 0)
+      (Layer. "maps/dublin/trinity_range_layer_2.txt" 1 0 0 0 0 0 0)
+      (Layer. "maps/dublin/trinity_range_layer_3.txt" 1.1 0 0 0 0 0 0))
+      ;tile markers
+      (list)
+      (TileSet. "tiles/trinity_range.png" TILE-DIM)
+      (list)
+      main-player
+      (list)
+      (list
+          (MapLink. 70 158 1)
+          )
+      (list
+        ;(LightingPreset. (Color. 0 0 0 80) 600 1 460 0)
+        )))
 
 (def dublin
   (Environment. 1
-    (vector frognerseteren-station underdog)
+    (vector frognerseteren-station underdog trinity-range)
     (vector )))

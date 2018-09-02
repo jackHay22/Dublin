@@ -6,9 +6,9 @@
             [dublin.map.lighting.manager :as lighting-manager])
   (:gen-class))
 
+(def config-src config/dublin)
 (def loaders
-    {:src config/dublin
-     :map-layers tilemap-manager/load-maps
+    {:map-layers tilemap-manager/load-maps
      :map-tileset tilemap-manager/load-tileset
      :map-objects tilemap-manager/load-map-objects
      :entities entity-manager/load-entity-resource-sets
@@ -53,10 +53,12 @@
               (:map-layers mapset-to-draw) (range)))))
 
 (defn environment-keypressed
+  "respond to key press, check maplinks and environment transforms"
   [key state]
   (utils/check-links
     (update-in state [:mapsets (:current state) :player]
-        #(entity-manager/entity-key-update % key)) key loaders))
+        #(entity-manager/entity-key-update % (utils/check-key-context key state)))
+    key loaders config-src))
 
 (defn environment-keyreleased
   [key state]
