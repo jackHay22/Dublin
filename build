@@ -24,6 +24,7 @@ build_native () {
   printf "${CLOVER}  Building ${GREEN}Dublin${NC} app package... ${YELLOW}${1}${NC} \n"
   javapackager -deploy \
       -native image \
+      -nosign \
       -outdir out \
       -outfile dublin.app \
       -srcfiles target/uberjar/dublin-*.*.*-SNAPSHOT-standalone.jar \
