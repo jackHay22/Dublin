@@ -61,6 +61,7 @@
     key loaders config-src))
 
 (defn environment-keyreleased
+  "respond to environment keyrelease"
   [key state]
   (update-in state [:mapsets (:current state) :player]
       #(entity-manager/entity-key-update %

@@ -143,8 +143,8 @@
       (list
           (MapLink. 70 158 1))
       (list
-        (LightingPreset. (Color. 0 0 0 80) 300 0 100 0)
-        (LightingPreset. (Color. 0 0 0 60) 400 3 200 0))))
+        (LightingPreset. (Color. 0 0 0 100) 400 0 100 0)
+        (LightingPreset. (Color. 0 0 0 100) 400 3 200 0))))
 
 (def dublin
   (Environment. 1

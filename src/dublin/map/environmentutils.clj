@@ -70,6 +70,7 @@
       (:map (nth (:map-layers mapset-state) layer)) indices))
 
 (defn check-key-context
+  "check area around player if key pressed"
   [key state]
   (let [current-mapset (nth (:mapsets state) (:current state))
         player (:player current-mapset)

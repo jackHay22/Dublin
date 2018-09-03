@@ -37,20 +37,17 @@
                           :in-range %1)
         depth-offset (:offset map-layer)
         position-x (bounds-correct
-                    (int
                       (* depth-offset
-                        (- (/ config/WINDOW-WIDTH 2) player-x)))
+                        (- (/ config/WINDOW-WIDTH 2) player-x))
                     (- config/WINDOW-WIDTH (:width map-layer)))
         position-y (bounds-correct
                     (- (/ config/WINDOW-HEIGHT 2) player-y)
                     (- config/WINDOW-HEIGHT (:height map-layer)))]
         (assoc map-layer
-          :position-x position-x
-          :position-y position-y
-          :start-draw-x
-          (int (/ (- position-x) config/TILE-DIM))
-          :start-draw-y
-          (int (/ (- position-y) config/TILE-DIM)))))
+          :position-x (int position-x)
+          :position-y (int position-y)
+          :start-draw-x (int (/ (- position-x) config/TILE-DIM))
+          :start-draw-y (int (/ (- position-y) config/TILE-DIM)))))
 
 (defn draw-tile [gr img x y]
   (env-utils/draw-image gr img x y))
