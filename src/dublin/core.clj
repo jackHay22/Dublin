@@ -1,6 +1,6 @@
 (ns dublin.core
   (:require [dublin.engine.gamewindow :as engine]
-            [dublin.state.gsmanager :as gsm]
+            [dublin.engine.gsmanager :as gsm]
             [dublin.config :as config])
   (:gen-class))
 

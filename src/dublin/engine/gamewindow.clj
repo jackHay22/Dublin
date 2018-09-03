@@ -1,7 +1,7 @@
 (ns dublin.engine.gamewindow
   (:gen-class)
   (:require [dublin.config :as config]
-            [dublin.state.gsmanager :as state]))
+            [dublin.engine.gsmanager :as state]))
 
 (import java.awt.event.KeyListener)
 (import java.awt.event.KeyEvent)

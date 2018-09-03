@@ -1,6 +1,7 @@
-(ns dublin.state.gsmanager
+(ns dublin.engine.gsmanager
   (:require [dublin.config :as config]
-            [dublin.state.mainstate :as mainstate])
+            [dublin.map.environmentmanager :as environmentmanager]
+            [dublin.menu.manager :as menumanager])
   (:gen-class))
 
 (defrecord GameState [draw-handler update-handler
@@ -14,11 +15,17 @@
 (def current-game-state (atom MAIN-STATE))
 
 (def STATES
-  [(GameState. #(mainstate/main-draw %1 %2)
-               #(mainstate/main-update %)
-               #(mainstate/main-keypressed %1 %2)
-               #(mainstate/main-keyreleased %1 %2)
-               #(mainstate/main-init)
+  [(GameState. environmentmanager/environment-draw
+               environmentmanager/environment-update
+               environmentmanager/environment-keypressed
+               environmentmanager/environment-keyreleased
+               #(environmentmanager/environment-init config/dublin)
+               (new-state-pipeline))
+   (GameState. menumanager/menu-draw
+               menumanager/menu-update
+               menumanager/menu-key-pressed
+               menumanager/menu-key-released
+               #(menumanager/init-menu config/main-menu)
                (new-state-pipeline))
                 ])
 

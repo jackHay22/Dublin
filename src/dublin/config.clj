@@ -67,6 +67,12 @@
 ; defines a minigame
 (defrecord Minigame [])
 
+; defines a menu option binding operation
+(defrecord OptionBinding [name gs-update-operation])
+
+; defines the main menu
+(defrecord Menu [menu-options])
+
 (def main-player
       (EntitySet.
         (list
@@ -150,3 +156,10 @@
   (Environment. 1
     (vector frognerseteren-station underdog trinity-range)
     (vector )))
+
+(def main-menu
+  (Menu.
+    (list
+      (OptionBinding. "Start" #(constantly 1))
+      (OptionBinding. "About" #(constantly 2))
+      (OptionBinding. "Exit" #(System/exit 0)))))
