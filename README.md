@@ -26,4 +26,7 @@ A Walk through the city.
     ```
 ## About
 
+## Trouble Shooting
+- If macOS gatekeeper prevents Dublin from being opened (double-click), right click on the app and select open.
+
 Copyright © 2018 Jack Hay

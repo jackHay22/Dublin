@@ -26,13 +26,13 @@ build_native () {
       -native image \
       -nosign \
       -outdir out \
-      -outfile dublin.app \
+      -outfile dublin \
       -srcfiles target/uberjar/dublin-*.*.*-SNAPSHOT-standalone.jar \
       -appclass dublin.core \
       -name "Dublin" \
       -title "Dublin" \
       -Bruntime=${JAVA_RUNTIME} \
-      -Bicon=resources/app/dublin.icns && \
+      -Bicon=resources/app/dublin.icns 
   printf "${BEER}  ${GREEN}Dublin.app${NC} built to ${YELLOW}/out/bundles/Dublin${NC}. \n"
 }
 
