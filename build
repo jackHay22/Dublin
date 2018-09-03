@@ -78,7 +78,6 @@ elif [ "$1" == "--release" ]; then
   docker build -t downloadserver web
   printf "${BEER}  Build ${YELLOW}$VERSION${NC} release complete \n"
 else
-  printf "${CLOVER}  Error: ${YELLOW}"$1"${NC} not a valid build mode"
-  printf "Use ${YELLOW}-release${NC} \n"
+  printf "${CLOVER}  Error: ${YELLOW}"$1"${NC} not a valid build mode \n"
   exit 1
 fi
