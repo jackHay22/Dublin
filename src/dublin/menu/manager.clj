@@ -26,9 +26,10 @@
               #(utils/draw-paralax-layer % (:image layer) (:x layer)))
           (:paralax-layers menu-state))
     (map (fn [option y]
-              #(utils/draw-menu-option % option 10 y))
+              #(utils/draw-menu-option % option config/MENU-GUTTER y))
           (:menu-options menu-state)
-          (range 20 config/WINDOW-HEIGHT 20))))))
+          (range config/MENU-GUTTER config/WINDOW-HEIGHT
+                 config/MENU-OPTION-SPACING))))))
 
 (defn menu-keypressed
   "respond to key press"

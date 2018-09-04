@@ -28,6 +28,9 @@
 (def MAIN-STATE 1)
 (def STARTING-STATE MENU-STATE)
 
+(def MENU-GUTTER 30)
+(def MENU-OPTION-SPACING 20)
+
 ; Environment definition groups map locations
 (defrecord Environment [current mapsets minigames])
 
@@ -76,7 +79,7 @@
 (defrecord OptionBinding [text selected gs-update-operation])
 
 ; defines the main menu with options list and paralax list
-(defrecord Menu [menu-options paralax-layers font])
+(defrecord Menu [menu-options paralax-layers])
 
 ; defines a paralax layer
 (defrecord ParalaxLayer [image x dx])
@@ -167,6 +170,7 @@
 
 (def MENU-COLOR-SELECTED (Color. 255 61 46))
 (def MENU-COLOR-DESELECTED (Color. 157 189 198))
+(def MENU-FONT (Font. "Arial" Font/PLAIN 12)) ;TODO: use
 
 (def main-menu
   (Menu.
@@ -175,5 +179,4 @@
       (OptionBinding. "About" false #(constantly 2))
       (OptionBinding. "Exit" false #(System/exit 0)))
     (list
-      (ParalaxLayer. "menu/menu_foreground.png" 0 0))
-    (Font. "Arial" Font/PLAIN 12)))
+      (ParalaxLayer. "menu/menu_foreground.png" 0 0))))
