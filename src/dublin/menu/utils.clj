@@ -11,7 +11,9 @@
   "draw an image to the gr object"
   [gr image x]
   (try
-    (.drawImage gr image (int x) 0 nil)
+    (do
+      (.drawImage gr image (int x) 0 nil)
+      (.drawImage gr image (int (- x (.getWidth image))) 0 nil))
     (catch Exception e
       (println "Dublin => Failed to render image:" image "\n" (.getMessage e)))))
 

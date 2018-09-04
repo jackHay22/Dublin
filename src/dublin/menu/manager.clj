@@ -15,7 +15,10 @@
   [menu-state]
   (update-in menu-state [:paralax-layers]
     #(map (fn [layer]
-            (update-in layer [:x] + (:dx layer))) %)))
+            (update-in layer [:x]
+                (fn [x] (mod (+ x (:dx layer))
+                             (.getWidth (:image layer))))))
+          %)))
 
 (defn menu-draw
   "draw menu state"
