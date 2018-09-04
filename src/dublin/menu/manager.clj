@@ -4,27 +4,40 @@
   (:gen-class))
 
 (defn init-menu
+  "initialize menu preset"
   [preset]
-  )
+  (update-in preset [:paralax-layers]
+    #(map (fn [layer]
+            (update-in layer [:image] utils/load-image)) %)))
 
 (defn menu-update
   "update menu state"
   [menu-state]
-  menu-state
-  )
+  (update-in menu-state [:paralax-layers]
+    #(map (fn [layer]
+            (update-in layer [:x] + (:dx layer))) %)))
 
 (defn menu-draw
   "draw menu state"
-  [gr menu])
+  [gr menu-state]
+  (doall (map #(% gr)
+  (concat
+    (map (fn [layer]
+              #(utils/draw-paralax-layer % (:image layer) (:x layer)))
+          (:paralax-layers menu-state))
+    (map (fn [option y]
+              #(utils/draw-menu-option % option 10 y))
+          (:menu-options menu-state)
+          (range 20 config/WINDOW-HEIGHT 20))))))
 
-(defn menu-key-pressed
+(defn menu-keypressed
   "respond to key press"
-  [key]
-
+  [key state]
+  state
   )
 
-(defn menu-key-released
+(defn menu-keyreleased
   "respond to key press"
-  [key]
-
+  [key state]
+  state
   )

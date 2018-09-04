@@ -1,6 +1,7 @@
 (ns dublin.config (:gen-class))
 
 (import java.awt.Color)
+(import java.awt.Font)
 
 (def VERSION "0.3.2")
 
@@ -22,6 +23,10 @@
 (def GRAVITY-CONSTANT 0.5)
 
 (def MAP-LINK-CONTROLLER :open)
+
+(def MENU-STATE 0)
+(def MAIN-STATE 1)
+(def STARTING-STATE MENU-STATE)
 
 ; Environment definition groups map locations
 (defrecord Environment [current mapsets minigames])
@@ -68,10 +73,13 @@
 (defrecord Minigame [])
 
 ; defines a menu option binding operation
-(defrecord OptionBinding [name gs-update-operation])
+(defrecord OptionBinding [text selected gs-update-operation])
 
-; defines the main menu
-(defrecord Menu [menu-options])
+; defines the main menu with options list and paralax list
+(defrecord Menu [menu-options paralax-layers font])
+
+; defines a paralax layer
+(defrecord ParalaxLayer [image x dx])
 
 (def main-player
       (EntitySet.
@@ -157,9 +165,15 @@
     (vector frognerseteren-station underdog trinity-range)
     (vector )))
 
+(def MENU-COLOR-SELECTED (Color. 255 61 46))
+(def MENU-COLOR-DESELECTED (Color. 157 189 198))
+
 (def main-menu
   (Menu.
     (list
-      (OptionBinding. "Start" #(constantly 1))
-      (OptionBinding. "About" #(constantly 2))
-      (OptionBinding. "Exit" #(System/exit 0)))))
+      (OptionBinding. "Start" true #(constantly 1))
+      (OptionBinding. "About" false #(constantly 2))
+      (OptionBinding. "Exit" false #(System/exit 0)))
+    (list
+      (ParalaxLayer. "menu/menu_foreground.png" 0 0))
+    (Font. "Arial" Font/PLAIN 12)))

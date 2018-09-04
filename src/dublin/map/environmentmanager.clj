@@ -45,7 +45,7 @@
                                             (list (:layer-index light-preset)
                                                   #(lighting-manager/render-lighting-from-preset gr % light-preset)))
                                         lighting-preset-list))]
-    (doall (map
+         (doall (map
               (fn [map-layer layer-index]
                 (doall
                   (map #(if (= layer-index (first %))

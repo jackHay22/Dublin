@@ -10,22 +10,20 @@
 
 (defn new-state-pipeline [] (atom nil))
 
-(def MAIN-STATE 0)
-
-(def current-game-state (atom MAIN-STATE))
+(def current-game-state (atom config/STARTING-STATE))
 
 (def STATES
-  [(GameState. environmentmanager/environment-draw
+  [(GameState. menumanager/menu-draw
+               menumanager/menu-update
+               menumanager/menu-keypressed
+               menumanager/menu-keyreleased
+               #(menumanager/init-menu config/main-menu)
+               (new-state-pipeline))
+   (GameState. environmentmanager/environment-draw
                environmentmanager/environment-update
                environmentmanager/environment-keypressed
                environmentmanager/environment-keyreleased
                #(environmentmanager/environment-init config/dublin)
-               (new-state-pipeline))
-   (GameState. menumanager/menu-draw
-               menumanager/menu-update
-               menumanager/menu-key-pressed
-               menumanager/menu-key-released
-               #(menumanager/init-menu config/main-menu)
                (new-state-pipeline))
                 ])
 
@@ -33,9 +31,8 @@
   "perform resource loads"
   []
   (let [state-record (nth STATES @current-game-state)]
-    (do
-      (reset! (:pipeline-ref state-record)
-              ((:init-handler state-record))))))
+    (do (reset! (:pipeline-ref state-record)
+                ((:init-handler state-record))))))
 
 (defn state-draw
   "draw current state"
