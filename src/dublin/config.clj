@@ -180,8 +180,9 @@
       (OptionBinding. "Exit" false #(System/exit 0)))
     (list
 
-      (ParalaxLayer. "menu/paralax_0.png" 0 1)
-      (ParalaxLayer. "menu/paralax_1.png" 0 0.8)
-      (ParalaxLayer. "menu/paralax_2.png" 0 0.6)
-      (ParalaxLayer. "menu/paralax_3.png" 0 0.4)
-      (ParalaxLayer. "menu/paralax_4.png" 0 -0.2))))
+      (ParalaxLayer. "menu/dublin_paralax_0.png" 0 1)
+      (ParalaxLayer. "menu/dublin_paralax_1.png" 0 0.8)
+      (ParalaxLayer. "menu/dublin_paralax_2.png" 0 0.6)
+      (ParalaxLayer. "menu/dublin_paralax_3.png" 0 0.4)
+      (ParalaxLayer. "menu/dublin_paralax_4.png" 0 -0.2)
+      (ParalaxLayer. "menu/dublin_paralax_5.png" 0 -0.8))))
