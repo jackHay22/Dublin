@@ -112,7 +112,7 @@
         (list)
         ;links
         (list
-            (MapLink. 128 286 0)
+            (MapLink. 128 286 3)
             (MapLink. 300 286 2)
             )
         ;lighting
@@ -163,9 +163,27 @@
         (LightingPreset. (Color. 0 0 0 100) 400 0 100 0)
         (LightingPreset. (Color. 0 0 0 100) 400 3 200 0))))
 
+(def matosinhos-beach
+  (MapSet.
+    (list
+      (Layer. "maps/portugal/matosinhos_layer_0.txt" 0 0 0 0 0 0 0)
+      (Layer. "maps/portugal/matosinhos_layer_1.txt" 0.2 0 0 0 0 0 0)
+      (Layer. "maps/portugal/matosinhos_layer_2.txt" 0.9 0 0 0 0 0 0)
+      (Layer. "maps/portugal/matosinhos_layer_3.txt" 1 0 0 0 0 0 0)
+      (Layer. "maps/portugal/matosinhos_layer_4.txt" 1.1 0 0 0 0 0 0))
+      ;tile markers
+      (list)
+      (TileSet. "tiles/matosinhos.png" TILE-DIM)
+      (list)
+      (update-in main-player [:layer-index] inc)
+      (list)
+      (list
+          (MapLink. 128 140 1))
+      (list)))
+
 (def dublin
   (Environment. 1
-    (vector frognerseteren-station underdog trinity-range)
+    (vector frognerseteren-station underdog trinity-range matosinhos-beach)
     (vector )))
 
 (def MENU-COLOR-SELECTED (Color. 255 61 46))
