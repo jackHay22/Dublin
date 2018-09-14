@@ -24,15 +24,15 @@
   "draw menu state"
   [gr menu-state]
   (doall (map #(% gr)
-  (concat
-    (map (fn [layer]
-              #(utils/draw-paralax-layer % (:image layer) (:x layer)))
-          (:paralax-layers menu-state))
-    (map (fn [option y]
-              #(utils/draw-menu-option % option config/MENU-GUTTER y))
-          (:menu-options menu-state)
-          (range config/MENU-GUTTER config/WINDOW-HEIGHT
-                 config/MENU-OPTION-SPACING))))))
+    (concat
+      (map (fn [layer]
+                #(utils/draw-paralax-layer % (:image layer) (:x layer)))
+           (:paralax-layers menu-state))
+      (map (fn [option y]
+                #(utils/draw-menu-option % option config/MENU-GUTTER y))
+           (:menu-options menu-state)
+           (range config/MENU-GUTTER config/WINDOW-HEIGHT
+                  config/MENU-OPTION-SPACING))))))
 
 (defn menu-keypressed
   "respond to key press"

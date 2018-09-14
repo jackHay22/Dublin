@@ -26,7 +26,7 @@
 
 (def MENU-STATE 0)
 (def MAIN-STATE 1)
-(def STARTING-STATE MENU-STATE)
+(def STARTING-STATE MAIN-STATE)
 
 (def MENU-GUTTER 30)
 (def MENU-OPTION-SPACING 20)
@@ -55,7 +55,7 @@
 ; A map object is an animated or interactive object in a mapset and is defined by an image -> images,
 ; an image dimension, the keyword (symbol for function name), the keybinding for toggling action, and
 ; the state of the object
-(defrecord MapObject [images dim action controller frame operating?])
+(defrecord MapObject [images width action controller frame operating?])
 
 ; An entity set defines a list of movement bindings, the index of the current movement, the current frame of the movement,
 ; the number of times that frame has been displayed, and the entity's coordinates plus layer
@@ -179,10 +179,10 @@
       (OptionBinding. "About" false #(constantly 2))
       (OptionBinding. "Exit" false #(System/exit 0)))
     (list
-
       (ParalaxLayer. "menu/dublin_paralax_0.png" 0 1)
       (ParalaxLayer. "menu/dublin_paralax_1.png" 0 0.8)
       (ParalaxLayer. "menu/dublin_paralax_2.png" 0 0.6)
       (ParalaxLayer. "menu/dublin_paralax_3.png" 0 0.4)
+      ;(ParalaxLayer. "menu/static_center.png" 0 0) ;TODO: decide
       (ParalaxLayer. "menu/dublin_paralax_4.png" 0 -0.2)
       (ParalaxLayer. "menu/dublin_paralax_5.png" 0 -0.8))))

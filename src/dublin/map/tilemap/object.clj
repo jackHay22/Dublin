@@ -7,10 +7,12 @@
 
 (defmacro defobject
   "Macro for defining object functions"
-  [name comment operation]
+  [name comment [self-arg] operation]
   (list 'def (symbol (str name family-marker))
-        (list 'fn '[context]
-              (list operation (list 'assoc 'context :operating? true)))))
+          (list 'fn '[self-arg]
+            (list 'fn '[mapset-state]
+               (list 'merge 'self-arg
+                  (list operation 'mapset-state))))))
 
 (defn resolve-function-keyword
   "resolve action to qualified function name"
@@ -18,18 +20,6 @@
   (ns-resolve *ns*
     (symbol (str "dublin.map.tilemap.object/"
       (name function-keyword) family-marker))))
-
-(defn action-invoke
-  "take object set and operate"
-  [mapobject]
-  (if (not (:operating? mapobject))
-      ((:action mapobject) mapobject)))
-
-(defn action-update
-  "update operating object"
-  [mapobject]
-  (if (:operating? mapobject)
-      ((:action mapobject) mapobject)))
 
 ;object definitions (note: objects responsible for shutting off)
 
@@ -39,6 +29,26 @@
   5 second delay on open frame
   2 frames for closing animation
   return to closed
-  :images :dim :action (self) :controller :frame :operating?"
-  (fn [self-state]
+  self:
+    :images :width :action (self) :controller :frame :operating?"
+  [self]
+  (fn [mapset-state]
+
+    ;return object state changes
+    {}
     ))
+
+(defobject door
+  "a door that animates when close to player
+  to indicate a maplink"
+  [self]
+  (fn [mapset-state]
+
+    ;return object state changes
+    {}
+    ))
+
+(defn update-objects-from-state
+  "update all objects given state"
+  [objects mapset-state]
+  (map #((:action %) mapset-state) objects))

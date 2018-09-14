@@ -28,6 +28,17 @@
                 (range 0 master-width block-dim))))
             (range 0 master-height block-dim))))))
 
+(defn load-flat-image-set
+  "load a flat image set"
+  [path width]
+  (let [master-image (env-utils/load-image path)
+        master-height (.getHeight master-image)]
+    (doall
+      (map
+        (fn [x]
+            (.getSubimage master-image x 0 width master-height))
+        (range 0 (.getWidth master-image) width)))))
+
 (defn set-map-layer-position
   "set map position (one layer)"
   [map-layer player-x player-y]

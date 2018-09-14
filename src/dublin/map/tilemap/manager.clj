@@ -11,10 +11,9 @@
   (doall (map (fn [layer]
           (let [map-loaded (doall (update-in layer [:map]
                                     (fn [map-path] (utils/load-map-file map-path))))]
-                (assoc map-loaded :width
-                          (* config/TILE-DIM (count (first (:map map-loaded))))
-                                   :height
-                          (* config/TILE-DIM (count (:map map-loaded))))))
+                (assoc map-loaded
+                  :width (* config/TILE-DIM (count (first (:map map-loaded))))
+                  :height (* config/TILE-DIM (count (:map map-loaded))))))
             map-layers)))
 
 (defn load-tileset
@@ -29,9 +28,9 @@
   (doall (map
       (fn [obj]
         (reduce #(update-in %1 [(first %2)] (second %2))
-            obj (map vector (list :images :action)
-                            (list #(utils/load-master-image-set % (:dim obj))
-                                  objects/resolve-function-keyword))))
+           obj (map vector (list :images :action)
+                           (list #(utils/load-flat-image-set % (:width obj))
+                                 objects/resolve-function-keyword))))
          objects)))
 
 (defn update-map-resource-set
@@ -44,9 +43,7 @@
             (fn [layers]
                 (map #(utils/set-map-layer-position % (:x player) (:y player))
                 layers)))
-        [:map-objects]
-            (fn [objects]
-                (map (fn [o] (objects/action-update o)) objects)))))
+        [:map-objects] objects/update-objects-from-state mapset-state)))
 
 (defn draw-map-layer
   "draw single map layer from set"
@@ -68,11 +65,3 @@
                       (utils/draw-tile gr (nth all-images image-index)
                           (+ position-x (* x config/TILE-DIM))
                           (+ position-y (* y config/TILE-DIM)))))))))
-
-(defn invoke-object-at
-  "invoke a map object"
-  [x y key mapset-state]
-  (let [action-loc (reduce
-                    #(if (= key (:controller %2))
-                        (reduced %1) (inc %1)) 0 (:map-objects mapset-state))]
-        (update-in mapset-state [:map-objects action-loc] #(objects/action-invoke %))))
