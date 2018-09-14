@@ -166,9 +166,9 @@
 (def matosinhos-beach
   (MapSet.
     (list
-      (Layer. "maps/portugal/matosinhos_layer_0.txt" 0 0 0 0 0 0 0)
-      (Layer. "maps/portugal/matosinhos_layer_1.txt" 0.2 0 0 0 0 0 0)
-      (Layer. "maps/portugal/matosinhos_layer_2.txt" 0.9 0 0 0 0 0 0)
+      (Layer. "maps/portugal/matosinhos_layer_0.txt" 0.6 0 0 0 0 0 0)
+      (Layer. "maps/portugal/matosinhos_layer_1.txt" 0.6 0 0 0 0 0 0)
+      (Layer. "maps/portugal/matosinhos_layer_2.txt" 0.8 0 0 0 0 0 0)
       (Layer. "maps/portugal/matosinhos_layer_3.txt" 1 0 0 0 0 0 0)
       (Layer. "maps/portugal/matosinhos_layer_4.txt" 1.1 0 0 0 0 0 0))
       ;tile markers
