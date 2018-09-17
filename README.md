@@ -1,4 +1,4 @@
-![HAY](https://github.com/jackHay22/upstream/blob/master/resources/app/readme_title.png)
+![HAY](https://github.com/jackHay22/Dublin/blob/master/resources/app/readme_title.png)
 
 
 A Walk through the city.
