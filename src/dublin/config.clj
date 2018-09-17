@@ -26,7 +26,7 @@
 
 (def MENU-STATE 0)
 (def MAIN-STATE 1)
-(def STARTING-STATE MAIN-STATE)
+(def STARTING-STATE MENU-STATE)
 
 (def MENU-GUTTER 30)
 (def MENU-OPTION-SPACING 20)
@@ -178,7 +178,7 @@
       (update-in main-player [:layer-index] inc)
       (list)
       (list
-          (MapLink. 128 140 1))
+          (MapLink. 128 154 1))
       (list)))
 
 (def dublin
@@ -188,7 +188,6 @@
 
 (def MENU-COLOR-SELECTED (Color. 255 61 46))
 (def MENU-COLOR-DESELECTED (Color. 157 189 198))
-(def MENU-FONT (Font. "Arial" Font/PLAIN 12)) ;TODO: use
 
 (def main-menu
   (Menu.
@@ -197,10 +196,10 @@
       (OptionBinding. "About" false #(constantly 2))
       (OptionBinding. "Exit" false #(System/exit 0)))
     (list
-      (ParalaxLayer. "menu/dublin_paralax_0.png" 0 1)
-      (ParalaxLayer. "menu/dublin_paralax_1.png" 0 0.8)
-      (ParalaxLayer. "menu/dublin_paralax_2.png" 0 0.6)
-      (ParalaxLayer. "menu/dublin_paralax_3.png" 0 0.4)
-      ;(ParalaxLayer. "menu/static_center.png" 0 0) ;TODO: decide
+      (ParalaxLayer. "menu/dublin_paralax_0.png" 0 0.8)
+      (ParalaxLayer. "menu/dublin_paralax_1.png" 0 0.6)
+      (ParalaxLayer. "menu/dublin_paralax_2.png" 0 0.4)
+      (ParalaxLayer. "menu/dublin_paralax_3.png" 0 0.2)
+      (ParalaxLayer. "menu/title.png" 0 0)
       (ParalaxLayer. "menu/dublin_paralax_4.png" 0 -0.2)
-      (ParalaxLayer. "menu/dublin_paralax_5.png" 0 -0.8))))
+      (ParalaxLayer. "menu/dublin_paralax_5.png" 0 -0.6))))
