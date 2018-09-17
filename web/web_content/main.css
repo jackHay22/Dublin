@@ -25,24 +25,6 @@ p {
   font-size: 16px;
 }
 
-.buttonOutline {
-  display: block;
-  text-decoration: none;
-  color: #495E67;
-  border: 2px solid #495E67;
-  border-radius: 6px;
-  width: 175px;
-  height: 53px;
-  line-height: 53px;
-  text-align: center;
-  margin-top: 30px;
-}
-
-.buttonOutline:hover {
-    background-color: #164852;
-    border: 2px solid #164852;
-    color: white;
-}
 .buttonFilled {
   display: block;
   text-decoration: none;
@@ -89,21 +71,12 @@ nav a span {
   margin-left: 7px;
 }
 
-code {
-    font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
-    background-color: #EBEBEB;
-    border-radius: 3px;
-    font-size: 80%;
-    padding: 0.3em 0.5em;
-    margin: 0;
-}
-
 /*-HEADER-*/
 header {
   height: 1000px;
   min-height: 1000px;
   padding: 0 5%;
-  background-image: url(images/scaled_background_header.png);
+  background-image: url(images/background_header.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: bottom right;
@@ -113,60 +86,17 @@ header h1 {
   margin: 2em 0 0 0;
 }
 
-/*-DOCS-*/
-.docs {
-  height: 800px;
-  min-height: 800px;
-  padding: 0 5%;
-}
-
-.docs h3 {
-  text-align: left;
-  padding: 2% 2%;
-  font-weight: 100;
-  color: #495E67;
-}
-.docs p {
-  padding: 0% 2%;
-  line-height: 1.5;
-  margin-bottom: 10px;
-}
-
-ul {
-  list-style: square url(images/bullet.svg) inside;
-}
-
-ul.a {
-  padding: 0% 4%;
-  line-height: 1.5;
-  list-style-type: square;
-}
-
-/*-Getting Started-*/
-.started {
+/*-About-*/
+.about {
   text-align: left;
   padding: 10em 5% 20em 5%;
-  background-image: url(images/background_started.svg);
+  background-image: url(images/underdog.png);
   background-repeat: no-repeat;
   background-size: 60%;
   background-position: top left;
 }
-.started h1, .started a {
+.about h1, .started a {
   margin-left: 65%;
-}
-
-.gallery {
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  width: 100%;
-  scroll-snap-points-x: repeat(100%);
-  scroll-snap-type: mandatory;
-  margin-bottom: 40px;
-}
-
-.gallery img {
-  width: 100%;
 }
 
 /*-Footer-*/
